@@ -43,10 +43,8 @@ export default function SignUpPage() {
       email,
       password,
       callbackURL: "/dashboard",
-      ...({
-        firstName: firstName.trim(),
-        lastName: lastName.trim() || undefined,
-      } as Record<string, string | undefined>),
+      firstName: firstName.trim(),
+      lastName: lastName.trim() || undefined,
     });
     setIsLoading(false);
     if (result.error) {
