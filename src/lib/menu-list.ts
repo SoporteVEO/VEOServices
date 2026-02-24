@@ -1,4 +1,4 @@
-import { Users, LayoutGrid, LucideIcon, Bell } from "lucide-react";
+import { Users, LayoutGrid, LucideIcon, Bell, File } from "lucide-react";
 
 type Submenu = {
   href: string;
@@ -36,19 +36,19 @@ export function getMenuList(pathname: string): Group[] {
       groupLabel: "Módulos",
       menus: [
         {
-          href: "/notifications",
-          label: "Notificaciones",
-          icon: Bell,
+          href: "/dashboard/contracts",
+          label: "Contratos",
+          icon: File,
           submenus: [],
         },
       ],
     },
     {
-      groupLabel: "Sistema",
+      groupLabel: "Configuración",
       menus: [
         {
-          href: "/users",
-          label: "Users",
+          href: "/dashboard/users",
+          label: "Usuarios",
           icon: Users,
         },
       ],

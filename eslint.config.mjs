@@ -1,20 +1,29 @@
 import { defineConfig, globalIgnores } from "eslint/config";
 import tsParser from "@typescript-eslint/parser";
-import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
+import eslintPluginPrettier from "eslint-plugin-prettier/recommended";
+import eslintConfigPrettier from "eslint-config-prettier/flat";
 
 const eslintConfig = defineConfig([
-  globalIgnores([".next/**", "out/**", "build/**", "next-env.d.ts"]),
+  globalIgnores([
+    ".next/**",
+    "out/**",
+    "build/**",
+    "next-env.d.ts",
+    "src/generated/**",
+  ]),
+  eslintConfigPrettier,
   {
-    files: ["**/*.{js,jsx,ts,tsx,mjs,cjs}"],
+    files: ["**/*.{ts,tsx,js,jsx,mjs,cjs}"],
     languageOptions: {
       parser: tsParser,
       parserOptions: {
         ecmaVersion: "latest",
-        ecmaFeatures: { jsx: true },
         sourceType: "module",
+        ecmaFeatures: { jsx: true },
       },
     },
-    ...eslintPluginPrettierRecommended,
+    ...eslintPluginPrettier,
   },
 ]);
+
 export default eslintConfig;

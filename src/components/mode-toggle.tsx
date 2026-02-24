@@ -24,10 +24,13 @@ export function ModeToggle() {
             size="icon"
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
           >
+            {theme === "dark" ? <MoonIcon /> : <SunIcon />}
             <span className="sr-only">Switch Theme</span>
           </Button>
         </TooltipTrigger>
-        <TooltipContent side="bottom">Switch Theme</TooltipContent>
+        <TooltipContent side="bottom">
+          {theme === "dark" ? "Modo oscuro" : "Modo claro"}
+        </TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );

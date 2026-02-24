@@ -1,9 +1,12 @@
-import { ContentLayout } from "@/components/admin-panel/content-layout";
+import { getSession } from "@/server/session";
+import { redirect } from "next/navigation";
 
-export default function Page() {
-  return (
-    <ContentLayout title="Dashboard">
-      <div>Test</div>
-    </ContentLayout>
-  );
+export default async function Page() {
+  const session = await getSession();
+
+  if (!session) {
+    redirect("/sign-in");
+  } else {
+    redirect("/dashboard");
+  }
 }
