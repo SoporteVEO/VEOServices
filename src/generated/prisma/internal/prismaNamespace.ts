@@ -387,7 +387,8 @@ export const ModelName = {
   User: 'User',
   Session: 'Session',
   Account: 'Account',
-  Verification: 'Verification'
+  Verification: 'Verification',
+  NotifiedContract: 'NotifiedContract'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -403,7 +404,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "account" | "verification"
+    modelProps: "user" | "session" | "account" | "verification" | "notifiedContract"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -703,6 +704,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    NotifiedContract: {
+      payload: Prisma.$NotifiedContractPayload<ExtArgs>
+      fields: Prisma.NotifiedContractFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.NotifiedContractFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotifiedContractPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.NotifiedContractFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotifiedContractPayload>
+        }
+        findFirst: {
+          args: Prisma.NotifiedContractFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotifiedContractPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.NotifiedContractFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotifiedContractPayload>
+        }
+        findMany: {
+          args: Prisma.NotifiedContractFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotifiedContractPayload>[]
+        }
+        create: {
+          args: Prisma.NotifiedContractCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotifiedContractPayload>
+        }
+        createMany: {
+          args: Prisma.NotifiedContractCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.NotifiedContractCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotifiedContractPayload>[]
+        }
+        delete: {
+          args: Prisma.NotifiedContractDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotifiedContractPayload>
+        }
+        update: {
+          args: Prisma.NotifiedContractUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotifiedContractPayload>
+        }
+        deleteMany: {
+          args: Prisma.NotifiedContractDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.NotifiedContractUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.NotifiedContractUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotifiedContractPayload>[]
+        }
+        upsert: {
+          args: Prisma.NotifiedContractUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotifiedContractPayload>
+        }
+        aggregate: {
+          args: Prisma.NotifiedContractAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateNotifiedContract>
+        }
+        groupBy: {
+          args: Prisma.NotifiedContractGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NotifiedContractGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.NotifiedContractCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NotifiedContractCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -803,6 +878,20 @@ export const VerificationScalarFieldEnum = {
 export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
 
 
+export const NotifiedContractScalarFieldEnum = {
+  id: 'id',
+  contractSourceId: 'contractSourceId',
+  contractDetailSourceId: 'contractDetailSourceId',
+  contractNumber: 'contractNumber',
+  status: 'status',
+  errorMessage: 'errorMessage',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NotifiedContractScalarFieldEnum = (typeof NotifiedContractScalarFieldEnum)[keyof typeof NotifiedContractScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -893,6 +982,34 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
+ * Reference to a field of type 'NotificationStatus'
+ */
+export type EnumNotificationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'NotificationStatus[]'
+ */
+export type ListEnumNotificationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Float'
+ */
+export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+/**
+ * Reference to a field of type 'Float[]'
+ */
+export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
 
 /**
@@ -994,6 +1111,7 @@ export type GlobalOmitConfig = {
   session?: Prisma.SessionOmit
   account?: Prisma.AccountOmit
   verification?: Prisma.VerificationOmit
+  notifiedContract?: Prisma.NotifiedContractOmit
 }
 
 /* Types for Logging */

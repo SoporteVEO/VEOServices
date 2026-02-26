@@ -54,7 +54,8 @@ export const ModelName = {
   User: 'User',
   Session: 'Session',
   Account: 'Account',
-  Verification: 'Verification'
+  Verification: 'Verification',
+  NotifiedContract: 'NotifiedContract'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -132,6 +133,20 @@ export const VerificationScalarFieldEnum = {
 } as const
 
 export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
+
+
+export const NotifiedContractScalarFieldEnum = {
+  id: 'id',
+  contractSourceId: 'contractSourceId',
+  contractDetailSourceId: 'contractDetailSourceId',
+  contractNumber: 'contractNumber',
+  status: 'status',
+  errorMessage: 'errorMessage',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NotifiedContractScalarFieldEnum = (typeof NotifiedContractScalarFieldEnum)[keyof typeof NotifiedContractScalarFieldEnum]
 
 
 export const SortOrder = {

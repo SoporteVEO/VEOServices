@@ -1,5 +1,7 @@
 SELECT DISTINCT
+TOP 1
     maecon.mconId,
+    detcon.dconId,
     maecon.mconAtencionA,
     detcon.dconFechaHasta,
     detcon.dconFechaDesde,

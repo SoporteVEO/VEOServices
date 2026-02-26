@@ -3,8 +3,8 @@
 import { NavigationButton } from "@/components/ui/navigation-button";
 
 const TABS = [
-  { tab: "contratos-por-vencer", label: "Contratos por vencer" },
-  { tab: "notificaciones", label: "Notificaciones" },
+  { tab: "contratos-por-vencer", label: "Por vencer" },
+  { tab: "notificaciones", label: "Notificados" },
 ] as const;
 
 export function ContractsTabNav() {

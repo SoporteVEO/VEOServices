@@ -1,35 +1,94 @@
-import { querySqlServer } from "@/db/sql_server";
-import { EndingSoonContracts } from "./entities/ending_soon_contracts";
+import { queryBriloDatabase } from "@/db/sql_server";
+import { EndingSoonContracts } from "./entities/source_ending_soon_contracts";
+import {
+  NotificationStatus,
+  NotifiedContract,
+} from "@/generated/prisma/client";
+import prisma from "@/db/prisma-service";
 import fs from "fs";
 
-export class ContractsService {
+class ContractsService {
   private getEndingSoonContractsQuery = fs.readFileSync(
     "./src/server/contracts/get-ending-soon-contracts.sql",
     "utf8"
   );
 
-  async getEndingSoonContracts(fechaDesde: Date, fechaHasta: Date) {
-    const contracts = await querySqlServer(this.getEndingSoonContractsQuery, {
-      FechaDesde: fechaDesde,
-      FechaHasta: fechaHasta,
+  async getEndingSoonContractsFiltered(fechaDesde: Date, fechaHasta: Date) {
+    const sourceRows = (await queryBriloDatabase(
+      this.getEndingSoonContractsQuery,
+      {
+        FechaDesde: fechaDesde,
+        FechaHasta: fechaHasta,
+      }
+    )) as { dconId: number }[];
+
+    if (sourceRows.length === 0) return [];
+
+    const sourceIdsInRange = sourceRows.map((r) => r.dconId);
+    const notified = await prisma.notifiedContract.findMany({
+      where: {
+        contractDetailSourceId: { in: sourceIdsInRange },
+        status: { not: NotificationStatus.FAILED },
+      },
+      select: { contractDetailSourceId: true },
     });
-    return this.mapContracts(contracts);
+    const notifiedSourceIds = new Set(
+      notified.map((n) => n.contractDetailSourceId)
+    );
+
+    const notYetNotified = sourceRows.filter(
+      (row) => !notifiedSourceIds.has(row.dconId)
+    );
+
+    return this.mapSourceContracts(notYetNotified);
   }
 
-  private mapContracts(contracts: any[]): EndingSoonContracts[] {
+  async getEndingSoonContracts(fechaDesde: Date, fechaHasta: Date) {
+    const contracts = await queryBriloDatabase(
+      this.getEndingSoonContractsQuery,
+      {
+        FechaDesde: fechaDesde,
+        FechaHasta: fechaHasta,
+      }
+    );
+    return this.mapSourceContracts(contracts);
+  }
+
+  async getNotifiedContracts() {
+    const contracts = await prisma.notifiedContract.findMany({
+      where: {
+        status: NotificationStatus.SENT,
+      },
+    });
+    return contracts as NotifiedContract[];
+  }
+
+  private mapSourceContracts(contracts: any[]): EndingSoonContracts[] {
     return contracts.map((contract) => {
       return {
-        id: contract.mconId,
+        contractSourceId: contract.mconId,
+        contractDetailSourceId: contract.dconId,
         description: contract.mconAtencionA,
-        start_date: contract.dconFechaDesde,
-        end_date: contract.dconFechaHasta,
-        contract_number: contract.mconCodigo,
-        billboard_address: contract.sitiDireccion,
-        customer_name: contract.cliNombres,
-        customer_email: contract.cliEmail,
+        startDate: contract.dconFechaDesde,
+        endDate: contract.dconFechaHasta,
+        contractNumber: contract.mconCodigo,
+        billboardAddress: contract.sitiDireccion,
+        customerName: contract.cliNombres,
+        customerEmail: contract.cliEmail,
       };
     });
   }
 }
 
 export const contractsService = new ContractsService();
+
+// Cached helpers
+export async function getCachedEndingSoonContracts(from: Date, to: Date) {
+  "use cache";
+  return await contractsService.getEndingSoonContracts(from, to);
+}
+
+export async function getCachedNotifiedContracts() {
+  "use cache";
+  return await contractsService.getNotifiedContracts();
+}

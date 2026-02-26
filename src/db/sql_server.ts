@@ -70,7 +70,7 @@ export function getSqlServerPool() {
  *     { id: 123 }
  *   );
  */
-export async function querySqlServer(
+export async function queryBriloDatabase(
   query: string,
   params: Record<string, unknown> = {}
 ) {

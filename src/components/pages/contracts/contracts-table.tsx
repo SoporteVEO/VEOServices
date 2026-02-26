@@ -12,12 +12,12 @@ import {
 } from "@tanstack/react-table";
 import { Input } from "@/components/ui/input";
 import { DataTable } from "@/components/ui/data-table";
-import type { EndingSoonContracts } from "@/server/contracts/entities/ending_soon_contracts";
+import type { EndingSoonContracts } from "@/server/contracts/entities/source_ending_soon_contracts";
 import { formatDate } from "@/lib/utils";
 
-type ContractRow = Omit<EndingSoonContracts, "start_date" | "end_date"> & {
-  start_date: Date | string;
-  end_date: Date | string;
+type ContractRow = Omit<EndingSoonContracts, "startDate" | "endDate"> & {
+  startDate: Date | string;
+  endDate: Date | string;
 };
 
 interface ContractsTableProps {
@@ -34,11 +34,11 @@ export function ContractsTable({ contracts }: ContractsTableProps) {
   const columns = React.useMemo<ColumnDef<ContractRow>[]>(
     () => [
       {
-        accessorKey: "contract_number",
+        accessorKey: "contractNumber",
         header: "Código",
         cell: ({ row }) => (
           <span className="font-medium">
-            {row.getValue("contract_number") ?? "—"}
+            {row.getValue("contractNumber") ?? "—"}
           </span>
         ),
       },
@@ -52,43 +52,34 @@ export function ContractsTable({ contracts }: ContractsTableProps) {
         ),
       },
       {
-        accessorKey: "customer_name",
+        accessorKey: "customerName",
         header: "Cliente",
         cell: ({ row }) => (
           <div>
             <div className="font-medium">
-              {row.getValue("customer_name") ?? "—"}
+              {row.getValue("customerName") ?? "—"}
             </div>
             <div className="text-sm text-muted-foreground">
-              {row.original.customer_email ?? "—"}
+              {row.original.customerEmail ?? "—"}
             </div>
           </div>
         ),
       },
       {
-        accessorKey: "billboard_address",
+        accessorKey: "billboardAddress",
         header: "Dirección valla",
         cell: ({ row }) => (
           <span className="text-sm">
-            {row.getValue("billboard_address") ?? "—"}
+            {row.getValue("billboardAddress") ?? "—"}
           </span>
         ),
       },
       {
-        accessorKey: "start_date",
-        header: "Inicio",
-        cell: ({ row }) => (
-          <span className="text-sm text-muted-foreground">
-            {formatDate(row.getValue("start_date"))}
-          </span>
-        ),
-      },
-      {
-        accessorKey: "end_date",
+        accessorKey: "endDate",
         header: "Vencimiento",
         cell: ({ row }) => (
           <span className="text-sm font-medium text-foreground">
-            {formatDate(row.getValue("end_date"))}
+            {formatDate(row.getValue("endDate"))}
           </span>
         ),
       },

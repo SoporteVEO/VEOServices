@@ -59,3 +59,8 @@ export type Account = Prisma.AccountModel
  * 
  */
 export type Verification = Prisma.VerificationModel
+/**
+ * Model NotifiedContract
+ * 
+ */
+export type NotifiedContract = Prisma.NotifiedContractModel
