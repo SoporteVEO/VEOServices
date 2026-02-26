@@ -1,12 +1,21 @@
 import { getSession } from "@/server/session";
 import { redirect } from "next/navigation";
+import { type ReactNode, Suspense } from "react";
 
-export default async function Page() {
+async function RootRedirect(): Promise<ReactNode> {
   const session = await getSession();
 
   if (!session) {
     redirect("/sign-in");
-  } else {
-    redirect("/dashboard");
   }
+  redirect("/dashboard");
+  return null;
+}
+
+export default function Page() {
+  return (
+    <Suspense fallback={null}>
+      <RootRedirect />
+    </Suspense>
+  );
 }
