@@ -13,7 +13,7 @@ class EmailService {
 
     const { data, error } = await this.resend.emails.send({
       from: `VEO <${this.fromEmail}>`,
-      to: [isProd ? this.testToEmail : this.testToEmail],
+      to: [isProd ? to : this.testToEmail],
       subject: subject,
       react: content,
     });
