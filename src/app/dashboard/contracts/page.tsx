@@ -23,11 +23,11 @@ export default async function ContractsPage({
   const { tab } = await searchParams;
   const activeTab = tab ?? "contratos-por-vencer";
 
+  const endDate = new Date();
+  endDate.setDate(endDate.getDate() + 15);
+
   const [contracts, notifiedContracts] = await Promise.all([
-    getCachedEndingSoonContracts(
-      new Date("2026-02-24"),
-      new Date("2026-03-25")
-    ),
+    getCachedEndingSoonContracts(new Date(), endDate),
     getCachedNotifiedContracts(),
   ]);
 
