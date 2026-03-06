@@ -7,13 +7,31 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export function toYYYYMMDD(d: Date): string {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
+export function parseYYYYMMDD(s: string | null | undefined): Date | null {
+  if (s == null || typeof s !== "string") return null;
+  const [yearStr, monthStr, dayStr] = s.split("-");
+  const year = Number(yearStr);
+  const month = Number(monthStr);
+  const day = Number(dayStr);
+  if (!year || !month || !day) return null;
+  const parsed = new Date(year, month - 1, day);
+  return isNaN(parsed.getTime()) ? null : parsed;
+}
+
 export function formatDate(value: Date | string | null | undefined): string {
   if (value == null) return "—";
   const d = typeof value === "string" ? new Date(value) : value;
   if (isNaN(d.getTime())) return "—";
-  const day = String(d.getUTCDate()).padStart(2, "0");
-  const month = String(d.getUTCMonth() + 1).padStart(2, "0");
-  const year = d.getUTCFullYear();
+  const day = String(d.getDate()).padStart(2, "0");
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const year = d.getFullYear();
   return `${day}/${month}/${year}`;
 }
 
