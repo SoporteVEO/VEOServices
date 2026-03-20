@@ -1,9 +1,11 @@
 import Link from "next/link";
-import { MapPin, Ruler, Tag } from "lucide-react";
+import { MapPin, Ruler, ShoppingCart } from "lucide-react";
 import type { AvailableBillboard } from "@/server/billboards/entities/available_billboard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import ImageViewerBasic from "@/components/commerce-ui/image-viewer-basic";
+import { useCartStore } from "@/lib/cart-store";
+import { Button } from "@/components/ui/button";
 
 function formatMoney(value: number | null) {
   if (value == null) return "—";
@@ -31,8 +33,12 @@ function formatSize(height: number | null, width: number | null) {
 
 export function BillboardCard({
   billboard,
+  from,
+  to,
 }: {
   billboard: AvailableBillboard;
+  from: string;
+  to: string;
 }) {
   const hasCoords =
     billboard.latitude != null &&
@@ -44,9 +50,26 @@ export function BillboardCard({
     ? `https://www.google.com/maps?q=${billboard.latitude},${billboard.longitude}`
     : null;
 
+  const addToCart = () => {
+    if (billboard.price == null) return;
+    const { addItem } = useCartStore.getState();
+    addItem({
+      billboardId: billboard.billboardId,
+      billboardCode: billboard.billboardCode ?? null,
+      reference: billboard.reference ?? null,
+      departmentName: billboard.departmentName ?? null,
+      cityName: billboard.cityName ?? null,
+      address: billboard.address ?? null,
+      price: Number(billboard.price),
+      imageUrl: billboard.imageUrl ?? null,
+      from,
+      to,
+    });
+  };
+
   return (
-    <Card className="overflow-hidden border-border/70 bg-card/90 shadow-sm shadow-black/5 backdrop-blur-sm -py-6">
-      <div className="relative aspect-16/10 w-full overflow-hidden bg-muted z-50">
+    <Card className="flex h-full w-full flex-col overflow-hidden border-border/70 bg-card/90 shadow-sm shadow-black/5 backdrop-blur-sm py-0">
+      <div className="relative aspect-16/10 w-full shrink-0 overflow-hidden bg-muted z-50">
         {billboard.imageUrl ? (
           <ImageViewerBasic
             imageUrl={billboard.imageUrl}
@@ -70,7 +93,7 @@ export function BillboardCard({
         </div>
       </div>
 
-      <CardHeader className="gap-1.5 pb-3">
+      <CardHeader className="shrink-0 gap-1.5 pb-3">
         <CardTitle className="text-sm font-semibold leading-tight">
           {billboard.reference ?? "Valla disponible"}
         </CardTitle>
@@ -81,7 +104,7 @@ export function BillboardCard({
         </div>
       </CardHeader>
 
-      <CardContent className="pb-5">
+      <CardContent className="min-h-0 flex-1">
         <div className="grid grid-cols-2 gap-3">
           <div className="flex items-start gap-2">
             <Ruler
@@ -98,24 +121,34 @@ export function BillboardCard({
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center justify-between">
-            <div></div>
+          <div className="flex flex-wrap items-center justify-between gap-2">
             {mapsHref && (
               <Link
                 href={mapsHref}
                 target="_blank"
                 rel="noreferrer"
                 className={cn(
-                  "inline-flex min-h-[44px] items-center justify-center rounded-md border border-border/70 bg-background/70 px-3 text-sm font-medium text-foreground shadow-xs transition-colors duration-200",
-                  "hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background cursor-pointer bg-primary text-primary-foreground"
+                  "inline-flex min-h-[40px] items-center justify-center rounded-md border border-border/70 bg-background/70 px-3 text-xs font-medium text-foreground shadow-xs transition-colors duration-200",
+                  "hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 )}
               >
+                <MapPin className="mr-1.5 h-3.5 w-3.5" aria-hidden />
                 Mapa
               </Link>
             )}
           </div>
         </div>
       </CardContent>
+      <div className="mt-auto shrink-0 px-6 pb-4 flex justify-center">
+        <Button
+          onClick={addToCart}
+          variant="default"
+          className="w-full max-w-[200px] cursor-pointer sm:w-fit"
+        >
+          <ShoppingCart className="size-3.5" aria-hidden />
+          Añadir al carrito
+        </Button>
+      </div>
     </Card>
   );
 }

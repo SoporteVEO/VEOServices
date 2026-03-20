@@ -4,6 +4,7 @@ import type {
   AvailableBillboard,
   AvailableState,
 } from "@/server/billboards/entities/available_billboard";
+import prisma from "@/db/prisma-service";
 
 function detectImageMimeType(buf: Buffer): string | null {
   if (
@@ -96,8 +97,43 @@ class BillboardsService {
       if (!Number.isFinite(numeric)) return false;
       return numeric > 0;
     });
+    const billboardIds = Array.from(
+      new Set(
+        filtered
+          .map((r) => r.caraId)
+          .filter((id) => id != null)
+          .map((id) => Number(id))
+          .filter((id) => Number.isFinite(id))
+      )
+    );
 
-    return filtered.map((r) => {
+    let purchasedByBillboardId = new Set<number>();
+    if (billboardIds.length > 0) {
+      const overlappingItems = await prisma.purchaseItem.findMany({
+        where: {
+          billboardId: { in: billboardIds },
+          purchase: {
+            status: "COMPLETED",
+          },
+          AND: [
+            { from: { lte: fechaFin } },
+            { to: { gte: fechaInicio } },
+          ],
+        },
+        select: {
+          billboardId: true,
+        },
+      });
+      purchasedByBillboardId = new Set(
+        overlappingItems.map((i) => i.billboardId)
+      );
+    }
+
+    const available = filtered.filter(
+      (r) => !purchasedByBillboardId.has(Number(r.caraId))
+    );
+
+    return available.map((r) => {
       return {
         billboardId: Number(r.caraId),
         billboardCode: r.caraCodigo ?? null,

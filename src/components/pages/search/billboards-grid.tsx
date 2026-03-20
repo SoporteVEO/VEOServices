@@ -5,12 +5,16 @@ interface BillboardsGridProps {
   billboards: AvailableBillboard[];
   isLoading?: boolean;
   skeletonCount?: number;
+  from: string;
+  to: string;
 }
 
 export function BillboardsGrid({
   billboards,
   isLoading,
   skeletonCount,
+  from,
+  to,
 }: BillboardsGridProps) {
   if (isLoading) {
     const baseCount = (skeletonCount ?? billboards.length) || 3;
@@ -30,7 +34,7 @@ export function BillboardsGrid({
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {billboards.map((b) => (
-        <BillboardCard key={b.billboardId} billboard={b} />
+        <BillboardCard key={b.billboardId} billboard={b} from={from} to={to} />
       ))}
     </div>
   );

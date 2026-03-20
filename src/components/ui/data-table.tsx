@@ -15,9 +15,14 @@ import {
 interface DataTableProps<TData> {
   table: TanStackTable<TData>;
   children?: React.ReactNode;
+  onRowClick?: (row: TData) => void;
 }
 
-export function DataTable<TData>({ table, children }: DataTableProps<TData>) {
+export function DataTable<TData>({
+  table,
+  children,
+  onRowClick,
+}: DataTableProps<TData>) {
   return (
     <div className="space-y-4">
       {children}
@@ -43,22 +48,32 @@ export function DataTable<TData>({ table, children }: DataTableProps<TData>) {
           </TableHeader>
           <TableBody>
             {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                  className="hover:bg-muted/50"
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
+              table.getRowModel().rows.map((row) => {
+                const handleClick = onRowClick
+                  ? () => onRowClick(row.original as TData)
+                  : undefined;
+                return (
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && "selected"}
+                    className={
+                      onRowClick
+                        ? "cursor-pointer hover:bg-muted/50"
+                        : "hover:bg-muted/50"
+                    }
+                    onClick={handleClick}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                );
+              })
             ) : (
               <TableRow>
                 <TableCell

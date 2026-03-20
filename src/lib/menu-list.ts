@@ -1,4 +1,11 @@
-import { Users, LayoutGrid, LucideIcon, Bell, File } from "lucide-react";
+import {
+  Users,
+  LayoutGrid,
+  LucideIcon,
+  File,
+  ShoppingCart,
+  Monitor,
+} from "lucide-react";
 
 type Submenu = {
   href: string;
@@ -39,6 +46,18 @@ export function getMenuList(pathname: string): Group[] {
           href: "/dashboard/contracts",
           label: "Contratos",
           icon: File,
+          submenus: [],
+        },
+        {
+          href: "/dashboard/purchases",
+          label: "Compras",
+          icon: ShoppingCart,
+          submenus: [],
+        },
+        {
+          href: "/dashboard/digital-billboards",
+          label: "Vallas digitales",
+          icon: Monitor,
           submenus: [],
         },
       ],

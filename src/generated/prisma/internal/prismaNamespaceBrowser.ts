@@ -55,7 +55,13 @@ export const ModelName = {
   Session: 'Session',
   Account: 'Account',
   Verification: 'Verification',
-  NotifiedContract: 'NotifiedContract'
+  NotifiedContract: 'NotifiedContract',
+  Customer: 'Customer',
+  Purchase: 'Purchase',
+  PurchaseItem: 'PurchaseItem',
+  Image: 'Image',
+  DigitalBillboardUsage: 'DigitalBillboardUsage',
+  DigitalBillboard: 'DigitalBillboard'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -147,6 +153,94 @@ export const NotifiedContractScalarFieldEnum = {
 } as const
 
 export type NotifiedContractScalarFieldEnum = (typeof NotifiedContractScalarFieldEnum)[keyof typeof NotifiedContractScalarFieldEnum]
+
+
+export const CustomerScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  phone: 'phone',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CustomerScalarFieldEnum = (typeof CustomerScalarFieldEnum)[keyof typeof CustomerScalarFieldEnum]
+
+
+export const PurchaseScalarFieldEnum = {
+  id: 'id',
+  customerId: 'customerId',
+  status: 'status',
+  paypalOrderId: 'paypalOrderId',
+  paypalCaptureId: 'paypalCaptureId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PurchaseScalarFieldEnum = (typeof PurchaseScalarFieldEnum)[keyof typeof PurchaseScalarFieldEnum]
+
+
+export const PurchaseItemScalarFieldEnum = {
+  id: 'id',
+  purchaseId: 'purchaseId',
+  billboardId: 'billboardId',
+  billboardCode: 'billboardCode',
+  reference: 'reference',
+  departmentName: 'departmentName',
+  cityName: 'cityName',
+  address: 'address',
+  price: 'price',
+  from: 'from',
+  to: 'to',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PurchaseItemScalarFieldEnum = (typeof PurchaseItemScalarFieldEnum)[keyof typeof PurchaseItemScalarFieldEnum]
+
+
+export const ImageScalarFieldEnum = {
+  id: 'id',
+  completeUrl: 'completeUrl',
+  thumbnailUrl: 'thumbnailUrl',
+  mediumUrl: 'mediumUrl',
+  deleteUrl: 'deleteUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ImageScalarFieldEnum = (typeof ImageScalarFieldEnum)[keyof typeof ImageScalarFieldEnum]
+
+
+export const DigitalBillboardUsageScalarFieldEnum = {
+  id: 'id',
+  digitalBillboardId: 'digitalBillboardId',
+  timestamp: 'timestamp',
+  duration: 'duration',
+  campaignName: 'campaignName',
+  campaignDescription: 'campaignDescription',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DigitalBillboardUsageScalarFieldEnum = (typeof DigitalBillboardUsageScalarFieldEnum)[keyof typeof DigitalBillboardUsageScalarFieldEnum]
+
+
+export const DigitalBillboardScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  address: 'address',
+  latitude: 'latitude',
+  longitude: 'longitude',
+  price: 'price',
+  imageId: 'imageId',
+  maxSpots: 'maxSpots',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DigitalBillboardScalarFieldEnum = (typeof DigitalBillboardScalarFieldEnum)[keyof typeof DigitalBillboardScalarFieldEnum]
 
 
 export const SortOrder = {

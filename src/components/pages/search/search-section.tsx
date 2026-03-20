@@ -13,6 +13,7 @@ import { DateRangeFilter } from "@/components/pages/search/date-range-filter";
 import { BillboardsGrid } from "@/components/pages/search/billboards-grid";
 import { formatDate } from "@/lib/utils";
 import { revalidateSearchPath } from "@/app/(unprotected)/search/actions";
+import { CartMenu } from "@/components/pages/search/cart-menu";
 
 interface SearchSectionProps {
   states: AvailableState[];
@@ -139,16 +140,18 @@ export function SearchSection({
           </Card>
         ) : (
           <section className="space-y-4">
-            <div className="flex items-baseline justify-between gap-3">
-              <h2 className="text-sm font-semibold text-foreground"></h2>
+            <div className="flex items-center justify-between gap-3">
               <div className="text-xs text-muted-foreground tabular-nums">
                 {billboards.length} encontradas
               </div>
+              <CartMenu />
             </div>
             <BillboardsGrid
               billboards={billboards}
               isLoading={isLoading}
               skeletonCount={selectedState?.availableCount}
+              from={from}
+              to={to}
             />
           </section>
         )}

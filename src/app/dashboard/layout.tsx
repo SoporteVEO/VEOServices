@@ -8,10 +8,15 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
-      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        <AdminPanelLayout>{children}</AdminPanelLayout>
+    <AdminPanelLayout>
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange
+      >
+        {children}
       </ThemeProvider>
-    </>
+    </AdminPanelLayout>
   );
 }

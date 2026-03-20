@@ -79,6 +79,12 @@ enum NotificationStatus {
   FAILED
 }
 
+enum PurchaseStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
 model Verification {
   id         String   @id
   identifier String
@@ -102,4 +108,101 @@ model NotifiedContract {
   updatedAt              DateTime           @updatedAt
 
   @@map("notified_contract")
+}
+
+model Customer {
+  id        String   @id @default(uuid())
+  name      String?
+  email     String   @unique
+  phone     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  purchases Purchase[]
+
+  @@map("customers")
+}
+
+model Purchase {
+  id              String         @id @default(uuid())
+  customerId      String
+  customer        Customer       @relation(fields: [customerId], references: [id])
+  status          PurchaseStatus @default(PENDING)
+  paypalOrderId   String?
+  paypalCaptureId String?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  items PurchaseItem[]
+
+  @@map("purchases")
+}
+
+model PurchaseItem {
+  id         String   @id @default(uuid())
+  purchaseId String
+  purchase   Purchase @relation(fields: [purchaseId], references: [id], onDelete: Cascade)
+
+  billboardId    Int
+  billboardCode  String?
+  reference      String?
+  departmentName String?
+  cityName       String?
+  address        String?
+  price          Float?
+
+  from DateTime
+  to   DateTime
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([billboardId, from, to])
+  @@map("purchase_items")
+}
+
+model Image {
+  id                String             @id @default(uuid())
+  completeUrl       String
+  thumbnailUrl      String
+  mediumUrl         String
+  deleteUrl         String?
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  digitalBillboards DigitalBillboard[]
+
+  @@map("images")
+}
+
+model DigitalBillboardUsage {
+  id                  String           @id @default(uuid())
+  digitalBillboard    DigitalBillboard @relation(fields: [digitalBillboardId], references: [id])
+  digitalBillboardId  String
+  timestamp           DateTime
+  duration            Int
+  campaignName        String?
+  campaignDescription String?
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @updatedAt
+
+  @@index([digitalBillboardId, timestamp])
+  @@map("digital_billboard_usages")
+}
+
+model DigitalBillboard {
+  id                     String                  @id @default(uuid())
+  code                   String                  @unique
+  name                   String
+  address                String
+  latitude               Float
+  longitude              Float
+  price                  Float
+  image                  Image?                  @relation(fields: [imageId], references: [id])
+  imageId                String?
+  maxSpots               Int                     @default(900)
+  createdAt              DateTime                @default(now())
+  updatedAt              DateTime                @updatedAt
+  digitalBillboardUsages DigitalBillboardUsage[]
+
+  @@map("digital_billboards")
 }

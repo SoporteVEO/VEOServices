@@ -42,3 +42,33 @@ export type Verification = Prisma.VerificationModel
  * 
  */
 export type NotifiedContract = Prisma.NotifiedContractModel
+/**
+ * Model Customer
+ * 
+ */
+export type Customer = Prisma.CustomerModel
+/**
+ * Model Purchase
+ * 
+ */
+export type Purchase = Prisma.PurchaseModel
+/**
+ * Model PurchaseItem
+ * 
+ */
+export type PurchaseItem = Prisma.PurchaseItemModel
+/**
+ * Model Image
+ * 
+ */
+export type Image = Prisma.ImageModel
+/**
+ * Model DigitalBillboardUsage
+ * 
+ */
+export type DigitalBillboardUsage = Prisma.DigitalBillboardUsageModel
+/**
+ * Model DigitalBillboard
+ * 
+ */
+export type DigitalBillboard = Prisma.DigitalBillboardModel

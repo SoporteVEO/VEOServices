@@ -35,6 +35,10 @@ export function formatDate(value: Date | string | null | undefined): string {
   return `${day}/${month}/${year}`;
 }
 
+export function formatDateRange(from: Date, to: Date) {
+  return `${format(new Date(from), "d MMM yyyy", { locale: es })} – ${format(new Date(to), "d MMM yyyy", { locale: es })}`;
+}
+
 export function formatLongDate(
   value: Date | string | null | undefined
 ): string {
@@ -59,4 +63,14 @@ export function formatLongDate(
 
   const out = parts.join(" ");
   return out.endsWith(".") ? out : `${out}.`;
+}
+
+export function formatMoney(value: number | null) {
+  if (value == null) return "—";
+  return new Intl.NumberFormat("es", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 0,
+    currencyDisplay: "code",
+  }).format(value!);
 }
