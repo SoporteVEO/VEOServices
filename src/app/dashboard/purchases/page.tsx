@@ -32,6 +32,8 @@ export default async function PurchasesPage() {
     items: p.items.map((i) => ({
       id: i.id,
       billboardId: i.billboardId,
+      digitalBillboardId: i.digitalBillboardId,
+      spotCount: i.spotCount,
       billboardCode: i.billboardCode,
       reference: i.reference,
       departmentName: i.departmentName,

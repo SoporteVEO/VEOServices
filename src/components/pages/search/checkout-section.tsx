@@ -28,7 +28,7 @@ import { Input } from "@/components/ui/input";
 
 export default function CheckoutSection() {
   const router = useRouter();
-  const { items, removeItemExact } = useCartStore();
+  const { items, removeLine } = useCartStore();
   const [message, setMessage] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [removingKey, setRemovingKey] = useState<string | null>(null);
@@ -40,10 +40,9 @@ export default function CheckoutSection() {
   const emailIsValid = email.trim().length > 3 && email.includes("@");
 
   const handleRemove = (item: CartItem) => {
-    const key = `${item.billboardId}-${item.from}-${item.to}`;
-    setRemovingKey(key);
+    setRemovingKey(item.lineId);
     setTimeout(() => {
-      removeItemExact(item.billboardId, item.from, item.to);
+      removeLine(item.lineId);
       setRemovingKey(null);
     }, 300);
   };
@@ -83,12 +82,11 @@ export default function CheckoutSection() {
             </Card>
           ) : (
             items.map((item) => {
-              const key = `${item.billboardId}-${item.from}-${item.to}`;
               return (
                 <Card
-                  key={key}
+                  key={item.lineId}
                   className={cn("gap-0 overflow-hidden py-0", {
-                    "opacity-50": removingKey === key,
+                    "opacity-50": removingKey === item.lineId,
                   })}
                 >
                   <div className="flex flex-col sm:flex-row">
@@ -110,8 +108,15 @@ export default function CheckoutSection() {
                       <div className="flex items-start justify-between">
                         <div>
                           <h3 className="text-foreground text-lg font-medium">
-                            {item.billboardCode ?? `Valla ${item.billboardId}`}
+                            {item.kind === "digital"
+                              ? (item.billboardCode ?? "Valla digital")
+                              : (item.billboardCode ?? `Valla ${item.billboardId}`)}
                           </h3>
+                          {item.kind === "digital" && (
+                            <p className="text-muted-foreground mt-1 text-xs">
+                              Paquete: {item.spotCount} spots
+                            </p>
+                          )}
                           <p className="text-muted-foreground mt-1 text-sm">
                             {item.reference ?? "—"}
                           </p>

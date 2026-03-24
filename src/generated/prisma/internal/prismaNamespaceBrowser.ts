@@ -190,6 +190,8 @@ export const PurchaseItemScalarFieldEnum = {
   cityName: 'cityName',
   address: 'address',
   price: 'price',
+  digitalBillboardId: 'digitalBillboardId',
+  spotCount: 'spotCount',
   from: 'from',
   to: 'to',
   createdAt: 'createdAt',
@@ -236,6 +238,8 @@ export const DigitalBillboardScalarFieldEnum = {
   price: 'price',
   imageId: 'imageId',
   maxSpots: 'maxSpots',
+  departmentId: 'departmentId',
+  departmentName: 'departmentName',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

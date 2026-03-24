@@ -3,10 +3,10 @@
 import * as React from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { CalendarDays, Loader2 } from "lucide-react";
-import type {
-  AvailableBillboard,
-  AvailableState,
-} from "@/server/billboards/entities/available_billboard";
+import type { AvailableBillboard } from "@/server/billboards/entities/available_billboard";
+import type { AvailableDigitalBillboard } from "@/server/billboards/entities/available_digital_billboard";
+import type { AvailableState } from "@/server/billboards/entities/available_billboard";
+import type { DigitalSpotOption } from "@/lib/digital-spots";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { StateSelect } from "@/components/pages/search/state-select";
 import { DateRangeFilter } from "@/components/pages/search/date-range-filter";
@@ -14,19 +14,29 @@ import { BillboardsGrid } from "@/components/pages/search/billboards-grid";
 import { formatDate } from "@/lib/utils";
 import { revalidateSearchPath } from "@/app/(unprotected)/search/actions";
 import { CartMenu } from "@/components/pages/search/cart-menu";
+import { BillboardTipoSelect } from "@/components/pages/search/billboard-tipo-select";
+import { DigitalSpotsFilter } from "@/components/pages/search/digital-spots-filter";
 
 interface SearchSectionProps {
+  mode: "estatica" | "digital";
   states: AvailableState[];
+  showStateFilter: boolean;
   selectedDepartmentId: number | null;
-  billboards: AvailableBillboard[];
+  staticBillboards: AvailableBillboard[];
+  digitalBillboards: AvailableDigitalBillboard[];
+  digitalSpots: DigitalSpotOption;
   from: string;
   to: string;
 }
 
 export function SearchSection({
+  mode,
   states,
+  showStateFilter,
   selectedDepartmentId,
-  billboards,
+  staticBillboards,
+  digitalBillboards,
+  digitalSpots,
   from,
   to,
 }: SearchSectionProps) {
@@ -75,6 +85,12 @@ export function SearchSection({
     setIsLoading(true);
   }, []);
 
+  const listLength =
+    mode === "digital" ? digitalBillboards.length : staticBillboards.length;
+  const noStaticRegions = mode === "estatica" && states.length === 0;
+  const emptyCatalog =
+    !noStaticRegions && listLength === 0 && loadingDepartmentId == null;
+
   return (
     <div className="space-y-6 md:grid md:grid-cols-[minmax(260px,300px)_minmax(0,1fr)] md:items-start md:gap-6 md:space-y-0">
       <div className="md:sticky md:top-4 -mx-3 border-b border-border/60 px-3 py-3 sm:-mx-6 sm:px-6 md:mx-0 md:border-b-0 md:px-0 md:py-0">
@@ -99,18 +115,24 @@ export function SearchSection({
               disabled={isLoading}
               isLoading={isLoading}
             />
-            <StateSelect
-              states={states}
-              selectedDepartamentoId={selectedDepartmentId}
-              onStartLoading={handleStateStartLoading}
-              isLoading={isLoading}
-            />
+            <BillboardTipoSelect value={mode} isLoading={isLoading} />
+            {mode === "digital" && (
+              <DigitalSpotsFilter value={digitalSpots} isLoading={isLoading} />
+            )}
+            {showStateFilter && (
+              <StateSelect
+                states={states}
+                selectedDepartamentoId={selectedDepartmentId}
+                onStartLoading={handleStateStartLoading}
+                isLoading={isLoading}
+              />
+            )}
           </CardContent>
         </Card>
       </div>
 
       <div className="space-y-4">
-        {states.length === 0 ? (
+        {noStaticRegions ? (
           <Card className="border-border/70 bg-card/90">
             <CardContent className="py-10 text-center">
               <div className="mx-auto max-w-[55ch] space-y-2">
@@ -124,16 +146,19 @@ export function SearchSection({
               </div>
             </CardContent>
           </Card>
-        ) : billboards.length === 0 && loadingDepartmentId == null ? (
+        ) : emptyCatalog ? (
           <Card className="border-border/70 bg-card/90">
             <CardContent className="py-10 text-center">
               <div className="mx-auto max-w-[55ch] space-y-2">
                 <div className="text-base font-semibold text-foreground">
-                  No results in this state
+                  {mode === "digital"
+                    ? "Sin vallas digitales disponibles"
+                    : "No results in this state"}
                 </div>
                 <div className="text-sm leading-relaxed text-muted-foreground">
-                  Try a different state. The current range is {formatDate(from)}{" "}
-                  – {formatDate(to)}.
+                  {mode === "digital"
+                    ? `Ninguna valla cumple el cupo de ${digitalSpots} spots en el rango ${formatDate(from)} – ${formatDate(to)}. Prueba otro paquete de spots o otro departamento.`
+                    : `Try a different state. The current range is ${formatDate(from)} – ${formatDate(to)}.`}
                 </div>
               </div>
             </CardContent>
@@ -142,14 +167,17 @@ export function SearchSection({
           <section className="space-y-4">
             <div className="flex items-center justify-between gap-3">
               <div className="text-xs text-muted-foreground tabular-nums">
-                {billboards.length} encontradas
+                {listLength} encontradas
               </div>
               <CartMenu />
             </div>
             <BillboardsGrid
-              billboards={billboards}
+              mode={mode}
+              staticBillboards={staticBillboards}
+              digitalBillboards={digitalBillboards}
+              digitalSpotFilter={digitalSpots}
               isLoading={isLoading}
-              skeletonCount={selectedState?.availableCount}
+              skeletonCount={selectedState?.availableCount ?? listLength}
               from={from}
               to={to}
             />

@@ -54,6 +54,7 @@ export function BillboardCard({
     if (billboard.price == null) return;
     const { addItem } = useCartStore.getState();
     addItem({
+      kind: "static",
       billboardId: billboard.billboardId,
       billboardCode: billboard.billboardCode ?? null,
       reference: billboard.reference ?? null,

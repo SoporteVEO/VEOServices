@@ -19,7 +19,7 @@ function formatMoney(value: number) {
 
 export function CartMenu() {
   const router = useRouter();
-  const { items, removeItem } = useCartStore();
+  const { items, removeLine } = useCartStore();
   const [open, setOpen] = React.useState(false);
   const menuRef = React.useRef<HTMLDivElement>(null);
 
@@ -102,7 +102,7 @@ export function CartMenu() {
               ) : (
                 items.map((item) => (
                   <div
-                    key={`${item.billboardId}-${item.from}-${item.to}`}
+                    key={item.lineId}
                     className="flex items-start gap-2 px-3 py-2 text-xs"
                   >
                     <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-md bg-muted">
@@ -120,8 +120,15 @@ export function CartMenu() {
                     </div>
                     <div className="min-w-0 flex-1">
                       <div className="truncate font-semibold">
-                        {item.billboardCode ?? `Valla ${item.billboardId}`}
+                        {item.kind === "digital"
+                          ? (item.billboardCode ?? "Valla digital")
+                          : (item.billboardCode ?? `Valla ${item.billboardId}`)}
                       </div>
+                      {item.kind === "digital" && (
+                        <div className="text-[11px] text-muted-foreground">
+                          {item.spotCount} spots
+                        </div>
+                      )}
                       <div className="truncate text-muted-foreground">
                         {item.cityName}, {item.departmentName}
                       </div>
@@ -131,7 +138,7 @@ export function CartMenu() {
                     </div>
                     <button
                       type="button"
-                      onClick={() => removeItem(item.billboardId)}
+                      onClick={() => removeLine(item.lineId)}
                       className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-border/60 text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
                       aria-label="Quitar de carrito"
                     >

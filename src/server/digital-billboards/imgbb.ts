@@ -8,7 +8,9 @@ export type ImgbbUploadResult = {
   deleteUrl: string | null;
 };
 
-export async function uploadToImgbb(imageBase64: string): Promise<ImgbbUploadResult> {
+export async function uploadToImgbb(
+  imageBase64: string
+): Promise<ImgbbUploadResult> {
   const key = process.env.IMGBB_API_KEY;
   if (!key) {
     throw new Error("IMGBB_API_KEY is not configured");
@@ -16,7 +18,6 @@ export async function uploadToImgbb(imageBase64: string): Promise<ImgbbUploadRes
 
   const url = new URL("https://api.imgbb.com/1/upload");
   url.searchParams.set("key", key);
-  url.searchParams.set("expiration", "600");
 
   const body = new FormData();
   body.append("image", imageBase64);

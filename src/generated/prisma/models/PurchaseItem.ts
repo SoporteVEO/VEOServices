@@ -29,11 +29,13 @@ export type AggregatePurchaseItem = {
 export type PurchaseItemAvgAggregateOutputType = {
   billboardId: number | null
   price: number | null
+  spotCount: number | null
 }
 
 export type PurchaseItemSumAggregateOutputType = {
   billboardId: number | null
   price: number | null
+  spotCount: number | null
 }
 
 export type PurchaseItemMinAggregateOutputType = {
@@ -46,6 +48,8 @@ export type PurchaseItemMinAggregateOutputType = {
   cityName: string | null
   address: string | null
   price: number | null
+  digitalBillboardId: string | null
+  spotCount: number | null
   from: Date | null
   to: Date | null
   createdAt: Date | null
@@ -62,6 +66,8 @@ export type PurchaseItemMaxAggregateOutputType = {
   cityName: string | null
   address: string | null
   price: number | null
+  digitalBillboardId: string | null
+  spotCount: number | null
   from: Date | null
   to: Date | null
   createdAt: Date | null
@@ -78,6 +84,8 @@ export type PurchaseItemCountAggregateOutputType = {
   cityName: number
   address: number
   price: number
+  digitalBillboardId: number
+  spotCount: number
   from: number
   to: number
   createdAt: number
@@ -89,11 +97,13 @@ export type PurchaseItemCountAggregateOutputType = {
 export type PurchaseItemAvgAggregateInputType = {
   billboardId?: true
   price?: true
+  spotCount?: true
 }
 
 export type PurchaseItemSumAggregateInputType = {
   billboardId?: true
   price?: true
+  spotCount?: true
 }
 
 export type PurchaseItemMinAggregateInputType = {
@@ -106,6 +116,8 @@ export type PurchaseItemMinAggregateInputType = {
   cityName?: true
   address?: true
   price?: true
+  digitalBillboardId?: true
+  spotCount?: true
   from?: true
   to?: true
   createdAt?: true
@@ -122,6 +134,8 @@ export type PurchaseItemMaxAggregateInputType = {
   cityName?: true
   address?: true
   price?: true
+  digitalBillboardId?: true
+  spotCount?: true
   from?: true
   to?: true
   createdAt?: true
@@ -138,6 +152,8 @@ export type PurchaseItemCountAggregateInputType = {
   cityName?: true
   address?: true
   price?: true
+  digitalBillboardId?: true
+  spotCount?: true
   from?: true
   to?: true
   createdAt?: true
@@ -234,13 +250,15 @@ export type PurchaseItemGroupByArgs<ExtArgs extends runtime.Types.Extensions.Int
 export type PurchaseItemGroupByOutputType = {
   id: string
   purchaseId: string
-  billboardId: number
+  billboardId: number | null
   billboardCode: string | null
   reference: string | null
   departmentName: string | null
   cityName: string | null
   address: string | null
   price: number | null
+  digitalBillboardId: string | null
+  spotCount: number | null
   from: Date
   to: Date
   createdAt: Date
@@ -273,35 +291,41 @@ export type PurchaseItemWhereInput = {
   NOT?: Prisma.PurchaseItemWhereInput | Prisma.PurchaseItemWhereInput[]
   id?: Prisma.StringFilter<"PurchaseItem"> | string
   purchaseId?: Prisma.StringFilter<"PurchaseItem"> | string
-  billboardId?: Prisma.IntFilter<"PurchaseItem"> | number
+  billboardId?: Prisma.IntNullableFilter<"PurchaseItem"> | number | null
   billboardCode?: Prisma.StringNullableFilter<"PurchaseItem"> | string | null
   reference?: Prisma.StringNullableFilter<"PurchaseItem"> | string | null
   departmentName?: Prisma.StringNullableFilter<"PurchaseItem"> | string | null
   cityName?: Prisma.StringNullableFilter<"PurchaseItem"> | string | null
   address?: Prisma.StringNullableFilter<"PurchaseItem"> | string | null
   price?: Prisma.FloatNullableFilter<"PurchaseItem"> | number | null
+  digitalBillboardId?: Prisma.StringNullableFilter<"PurchaseItem"> | string | null
+  spotCount?: Prisma.IntNullableFilter<"PurchaseItem"> | number | null
   from?: Prisma.DateTimeFilter<"PurchaseItem"> | Date | string
   to?: Prisma.DateTimeFilter<"PurchaseItem"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"PurchaseItem"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PurchaseItem"> | Date | string
   purchase?: Prisma.XOR<Prisma.PurchaseScalarRelationFilter, Prisma.PurchaseWhereInput>
+  digitalBillboard?: Prisma.XOR<Prisma.DigitalBillboardNullableScalarRelationFilter, Prisma.DigitalBillboardWhereInput> | null
 }
 
 export type PurchaseItemOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   purchaseId?: Prisma.SortOrder
-  billboardId?: Prisma.SortOrder
+  billboardId?: Prisma.SortOrderInput | Prisma.SortOrder
   billboardCode?: Prisma.SortOrderInput | Prisma.SortOrder
   reference?: Prisma.SortOrderInput | Prisma.SortOrder
   departmentName?: Prisma.SortOrderInput | Prisma.SortOrder
   cityName?: Prisma.SortOrderInput | Prisma.SortOrder
   address?: Prisma.SortOrderInput | Prisma.SortOrder
   price?: Prisma.SortOrderInput | Prisma.SortOrder
+  digitalBillboardId?: Prisma.SortOrderInput | Prisma.SortOrder
+  spotCount?: Prisma.SortOrderInput | Prisma.SortOrder
   from?: Prisma.SortOrder
   to?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   purchase?: Prisma.PurchaseOrderByWithRelationInput
+  digitalBillboard?: Prisma.DigitalBillboardOrderByWithRelationInput
 }
 
 export type PurchaseItemWhereUniqueInput = Prisma.AtLeast<{
@@ -310,30 +334,35 @@ export type PurchaseItemWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.PurchaseItemWhereInput[]
   NOT?: Prisma.PurchaseItemWhereInput | Prisma.PurchaseItemWhereInput[]
   purchaseId?: Prisma.StringFilter<"PurchaseItem"> | string
-  billboardId?: Prisma.IntFilter<"PurchaseItem"> | number
+  billboardId?: Prisma.IntNullableFilter<"PurchaseItem"> | number | null
   billboardCode?: Prisma.StringNullableFilter<"PurchaseItem"> | string | null
   reference?: Prisma.StringNullableFilter<"PurchaseItem"> | string | null
   departmentName?: Prisma.StringNullableFilter<"PurchaseItem"> | string | null
   cityName?: Prisma.StringNullableFilter<"PurchaseItem"> | string | null
   address?: Prisma.StringNullableFilter<"PurchaseItem"> | string | null
   price?: Prisma.FloatNullableFilter<"PurchaseItem"> | number | null
+  digitalBillboardId?: Prisma.StringNullableFilter<"PurchaseItem"> | string | null
+  spotCount?: Prisma.IntNullableFilter<"PurchaseItem"> | number | null
   from?: Prisma.DateTimeFilter<"PurchaseItem"> | Date | string
   to?: Prisma.DateTimeFilter<"PurchaseItem"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"PurchaseItem"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PurchaseItem"> | Date | string
   purchase?: Prisma.XOR<Prisma.PurchaseScalarRelationFilter, Prisma.PurchaseWhereInput>
+  digitalBillboard?: Prisma.XOR<Prisma.DigitalBillboardNullableScalarRelationFilter, Prisma.DigitalBillboardWhereInput> | null
 }, "id">
 
 export type PurchaseItemOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   purchaseId?: Prisma.SortOrder
-  billboardId?: Prisma.SortOrder
+  billboardId?: Prisma.SortOrderInput | Prisma.SortOrder
   billboardCode?: Prisma.SortOrderInput | Prisma.SortOrder
   reference?: Prisma.SortOrderInput | Prisma.SortOrder
   departmentName?: Prisma.SortOrderInput | Prisma.SortOrder
   cityName?: Prisma.SortOrderInput | Prisma.SortOrder
   address?: Prisma.SortOrderInput | Prisma.SortOrder
   price?: Prisma.SortOrderInput | Prisma.SortOrder
+  digitalBillboardId?: Prisma.SortOrderInput | Prisma.SortOrder
+  spotCount?: Prisma.SortOrderInput | Prisma.SortOrder
   from?: Prisma.SortOrder
   to?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -351,13 +380,15 @@ export type PurchaseItemScalarWhereWithAggregatesInput = {
   NOT?: Prisma.PurchaseItemScalarWhereWithAggregatesInput | Prisma.PurchaseItemScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"PurchaseItem"> | string
   purchaseId?: Prisma.StringWithAggregatesFilter<"PurchaseItem"> | string
-  billboardId?: Prisma.IntWithAggregatesFilter<"PurchaseItem"> | number
+  billboardId?: Prisma.IntNullableWithAggregatesFilter<"PurchaseItem"> | number | null
   billboardCode?: Prisma.StringNullableWithAggregatesFilter<"PurchaseItem"> | string | null
   reference?: Prisma.StringNullableWithAggregatesFilter<"PurchaseItem"> | string | null
   departmentName?: Prisma.StringNullableWithAggregatesFilter<"PurchaseItem"> | string | null
   cityName?: Prisma.StringNullableWithAggregatesFilter<"PurchaseItem"> | string | null
   address?: Prisma.StringNullableWithAggregatesFilter<"PurchaseItem"> | string | null
   price?: Prisma.FloatNullableWithAggregatesFilter<"PurchaseItem"> | number | null
+  digitalBillboardId?: Prisma.StringNullableWithAggregatesFilter<"PurchaseItem"> | string | null
+  spotCount?: Prisma.IntNullableWithAggregatesFilter<"PurchaseItem"> | number | null
   from?: Prisma.DateTimeWithAggregatesFilter<"PurchaseItem"> | Date | string
   to?: Prisma.DateTimeWithAggregatesFilter<"PurchaseItem"> | Date | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"PurchaseItem"> | Date | string
@@ -366,30 +397,34 @@ export type PurchaseItemScalarWhereWithAggregatesInput = {
 
 export type PurchaseItemCreateInput = {
   id?: string
-  billboardId: number
+  billboardId?: number | null
   billboardCode?: string | null
   reference?: string | null
   departmentName?: string | null
   cityName?: string | null
   address?: string | null
   price?: number | null
+  spotCount?: number | null
   from: Date | string
   to: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
   purchase: Prisma.PurchaseCreateNestedOneWithoutItemsInput
+  digitalBillboard?: Prisma.DigitalBillboardCreateNestedOneWithoutPurchaseItemsInput
 }
 
 export type PurchaseItemUncheckedCreateInput = {
   id?: string
   purchaseId: string
-  billboardId: number
+  billboardId?: number | null
   billboardCode?: string | null
   reference?: string | null
   departmentName?: string | null
   cityName?: string | null
   address?: string | null
   price?: number | null
+  digitalBillboardId?: string | null
+  spotCount?: number | null
   from: Date | string
   to: Date | string
   createdAt?: Date | string
@@ -398,30 +433,34 @@ export type PurchaseItemUncheckedCreateInput = {
 
 export type PurchaseItemUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  billboardId?: Prisma.IntFieldUpdateOperationsInput | number
+  billboardId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billboardCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cityName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  spotCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   from?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   to?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   purchase?: Prisma.PurchaseUpdateOneRequiredWithoutItemsNestedInput
+  digitalBillboard?: Prisma.DigitalBillboardUpdateOneWithoutPurchaseItemsNestedInput
 }
 
 export type PurchaseItemUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   purchaseId?: Prisma.StringFieldUpdateOperationsInput | string
-  billboardId?: Prisma.IntFieldUpdateOperationsInput | number
+  billboardId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billboardCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cityName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  digitalBillboardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  spotCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   from?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   to?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -431,13 +470,15 @@ export type PurchaseItemUncheckedUpdateInput = {
 export type PurchaseItemCreateManyInput = {
   id?: string
   purchaseId: string
-  billboardId: number
+  billboardId?: number | null
   billboardCode?: string | null
   reference?: string | null
   departmentName?: string | null
   cityName?: string | null
   address?: string | null
   price?: number | null
+  digitalBillboardId?: string | null
+  spotCount?: number | null
   from: Date | string
   to: Date | string
   createdAt?: Date | string
@@ -446,13 +487,14 @@ export type PurchaseItemCreateManyInput = {
 
 export type PurchaseItemUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  billboardId?: Prisma.IntFieldUpdateOperationsInput | number
+  billboardId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billboardCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cityName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  spotCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   from?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   to?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -462,13 +504,15 @@ export type PurchaseItemUpdateManyMutationInput = {
 export type PurchaseItemUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   purchaseId?: Prisma.StringFieldUpdateOperationsInput | string
-  billboardId?: Prisma.IntFieldUpdateOperationsInput | number
+  billboardId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billboardCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cityName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  digitalBillboardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  spotCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   from?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   to?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -495,6 +539,8 @@ export type PurchaseItemCountOrderByAggregateInput = {
   cityName?: Prisma.SortOrder
   address?: Prisma.SortOrder
   price?: Prisma.SortOrder
+  digitalBillboardId?: Prisma.SortOrder
+  spotCount?: Prisma.SortOrder
   from?: Prisma.SortOrder
   to?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -504,6 +550,7 @@ export type PurchaseItemCountOrderByAggregateInput = {
 export type PurchaseItemAvgOrderByAggregateInput = {
   billboardId?: Prisma.SortOrder
   price?: Prisma.SortOrder
+  spotCount?: Prisma.SortOrder
 }
 
 export type PurchaseItemMaxOrderByAggregateInput = {
@@ -516,6 +563,8 @@ export type PurchaseItemMaxOrderByAggregateInput = {
   cityName?: Prisma.SortOrder
   address?: Prisma.SortOrder
   price?: Prisma.SortOrder
+  digitalBillboardId?: Prisma.SortOrder
+  spotCount?: Prisma.SortOrder
   from?: Prisma.SortOrder
   to?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -532,6 +581,8 @@ export type PurchaseItemMinOrderByAggregateInput = {
   cityName?: Prisma.SortOrder
   address?: Prisma.SortOrder
   price?: Prisma.SortOrder
+  digitalBillboardId?: Prisma.SortOrder
+  spotCount?: Prisma.SortOrder
   from?: Prisma.SortOrder
   to?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -541,6 +592,7 @@ export type PurchaseItemMinOrderByAggregateInput = {
 export type PurchaseItemSumOrderByAggregateInput = {
   billboardId?: Prisma.SortOrder
   price?: Prisma.SortOrder
+  spotCount?: Prisma.SortOrder
 }
 
 export type PurchaseItemCreateNestedManyWithoutPurchaseInput = {
@@ -585,6 +637,14 @@ export type PurchaseItemUncheckedUpdateManyWithoutPurchaseNestedInput = {
   deleteMany?: Prisma.PurchaseItemScalarWhereInput | Prisma.PurchaseItemScalarWhereInput[]
 }
 
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type NullableFloatFieldUpdateOperationsInput = {
   set?: number | null
   increment?: number
@@ -593,30 +653,76 @@ export type NullableFloatFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type PurchaseItemCreateNestedManyWithoutDigitalBillboardInput = {
+  create?: Prisma.XOR<Prisma.PurchaseItemCreateWithoutDigitalBillboardInput, Prisma.PurchaseItemUncheckedCreateWithoutDigitalBillboardInput> | Prisma.PurchaseItemCreateWithoutDigitalBillboardInput[] | Prisma.PurchaseItemUncheckedCreateWithoutDigitalBillboardInput[]
+  connectOrCreate?: Prisma.PurchaseItemCreateOrConnectWithoutDigitalBillboardInput | Prisma.PurchaseItemCreateOrConnectWithoutDigitalBillboardInput[]
+  createMany?: Prisma.PurchaseItemCreateManyDigitalBillboardInputEnvelope
+  connect?: Prisma.PurchaseItemWhereUniqueInput | Prisma.PurchaseItemWhereUniqueInput[]
+}
+
+export type PurchaseItemUncheckedCreateNestedManyWithoutDigitalBillboardInput = {
+  create?: Prisma.XOR<Prisma.PurchaseItemCreateWithoutDigitalBillboardInput, Prisma.PurchaseItemUncheckedCreateWithoutDigitalBillboardInput> | Prisma.PurchaseItemCreateWithoutDigitalBillboardInput[] | Prisma.PurchaseItemUncheckedCreateWithoutDigitalBillboardInput[]
+  connectOrCreate?: Prisma.PurchaseItemCreateOrConnectWithoutDigitalBillboardInput | Prisma.PurchaseItemCreateOrConnectWithoutDigitalBillboardInput[]
+  createMany?: Prisma.PurchaseItemCreateManyDigitalBillboardInputEnvelope
+  connect?: Prisma.PurchaseItemWhereUniqueInput | Prisma.PurchaseItemWhereUniqueInput[]
+}
+
+export type PurchaseItemUpdateManyWithoutDigitalBillboardNestedInput = {
+  create?: Prisma.XOR<Prisma.PurchaseItemCreateWithoutDigitalBillboardInput, Prisma.PurchaseItemUncheckedCreateWithoutDigitalBillboardInput> | Prisma.PurchaseItemCreateWithoutDigitalBillboardInput[] | Prisma.PurchaseItemUncheckedCreateWithoutDigitalBillboardInput[]
+  connectOrCreate?: Prisma.PurchaseItemCreateOrConnectWithoutDigitalBillboardInput | Prisma.PurchaseItemCreateOrConnectWithoutDigitalBillboardInput[]
+  upsert?: Prisma.PurchaseItemUpsertWithWhereUniqueWithoutDigitalBillboardInput | Prisma.PurchaseItemUpsertWithWhereUniqueWithoutDigitalBillboardInput[]
+  createMany?: Prisma.PurchaseItemCreateManyDigitalBillboardInputEnvelope
+  set?: Prisma.PurchaseItemWhereUniqueInput | Prisma.PurchaseItemWhereUniqueInput[]
+  disconnect?: Prisma.PurchaseItemWhereUniqueInput | Prisma.PurchaseItemWhereUniqueInput[]
+  delete?: Prisma.PurchaseItemWhereUniqueInput | Prisma.PurchaseItemWhereUniqueInput[]
+  connect?: Prisma.PurchaseItemWhereUniqueInput | Prisma.PurchaseItemWhereUniqueInput[]
+  update?: Prisma.PurchaseItemUpdateWithWhereUniqueWithoutDigitalBillboardInput | Prisma.PurchaseItemUpdateWithWhereUniqueWithoutDigitalBillboardInput[]
+  updateMany?: Prisma.PurchaseItemUpdateManyWithWhereWithoutDigitalBillboardInput | Prisma.PurchaseItemUpdateManyWithWhereWithoutDigitalBillboardInput[]
+  deleteMany?: Prisma.PurchaseItemScalarWhereInput | Prisma.PurchaseItemScalarWhereInput[]
+}
+
+export type PurchaseItemUncheckedUpdateManyWithoutDigitalBillboardNestedInput = {
+  create?: Prisma.XOR<Prisma.PurchaseItemCreateWithoutDigitalBillboardInput, Prisma.PurchaseItemUncheckedCreateWithoutDigitalBillboardInput> | Prisma.PurchaseItemCreateWithoutDigitalBillboardInput[] | Prisma.PurchaseItemUncheckedCreateWithoutDigitalBillboardInput[]
+  connectOrCreate?: Prisma.PurchaseItemCreateOrConnectWithoutDigitalBillboardInput | Prisma.PurchaseItemCreateOrConnectWithoutDigitalBillboardInput[]
+  upsert?: Prisma.PurchaseItemUpsertWithWhereUniqueWithoutDigitalBillboardInput | Prisma.PurchaseItemUpsertWithWhereUniqueWithoutDigitalBillboardInput[]
+  createMany?: Prisma.PurchaseItemCreateManyDigitalBillboardInputEnvelope
+  set?: Prisma.PurchaseItemWhereUniqueInput | Prisma.PurchaseItemWhereUniqueInput[]
+  disconnect?: Prisma.PurchaseItemWhereUniqueInput | Prisma.PurchaseItemWhereUniqueInput[]
+  delete?: Prisma.PurchaseItemWhereUniqueInput | Prisma.PurchaseItemWhereUniqueInput[]
+  connect?: Prisma.PurchaseItemWhereUniqueInput | Prisma.PurchaseItemWhereUniqueInput[]
+  update?: Prisma.PurchaseItemUpdateWithWhereUniqueWithoutDigitalBillboardInput | Prisma.PurchaseItemUpdateWithWhereUniqueWithoutDigitalBillboardInput[]
+  updateMany?: Prisma.PurchaseItemUpdateManyWithWhereWithoutDigitalBillboardInput | Prisma.PurchaseItemUpdateManyWithWhereWithoutDigitalBillboardInput[]
+  deleteMany?: Prisma.PurchaseItemScalarWhereInput | Prisma.PurchaseItemScalarWhereInput[]
+}
+
 export type PurchaseItemCreateWithoutPurchaseInput = {
   id?: string
-  billboardId: number
+  billboardId?: number | null
   billboardCode?: string | null
   reference?: string | null
   departmentName?: string | null
   cityName?: string | null
   address?: string | null
   price?: number | null
+  spotCount?: number | null
   from: Date | string
   to: Date | string
   createdAt?: Date | string
   updatedAt?: Date | string
+  digitalBillboard?: Prisma.DigitalBillboardCreateNestedOneWithoutPurchaseItemsInput
 }
 
 export type PurchaseItemUncheckedCreateWithoutPurchaseInput = {
   id?: string
-  billboardId: number
+  billboardId?: number | null
   billboardCode?: string | null
   reference?: string | null
   departmentName?: string | null
   cityName?: string | null
   address?: string | null
   price?: number | null
+  digitalBillboardId?: string | null
+  spotCount?: number | null
   from: Date | string
   to: Date | string
   createdAt?: Date | string
@@ -655,28 +761,92 @@ export type PurchaseItemScalarWhereInput = {
   NOT?: Prisma.PurchaseItemScalarWhereInput | Prisma.PurchaseItemScalarWhereInput[]
   id?: Prisma.StringFilter<"PurchaseItem"> | string
   purchaseId?: Prisma.StringFilter<"PurchaseItem"> | string
-  billboardId?: Prisma.IntFilter<"PurchaseItem"> | number
+  billboardId?: Prisma.IntNullableFilter<"PurchaseItem"> | number | null
   billboardCode?: Prisma.StringNullableFilter<"PurchaseItem"> | string | null
   reference?: Prisma.StringNullableFilter<"PurchaseItem"> | string | null
   departmentName?: Prisma.StringNullableFilter<"PurchaseItem"> | string | null
   cityName?: Prisma.StringNullableFilter<"PurchaseItem"> | string | null
   address?: Prisma.StringNullableFilter<"PurchaseItem"> | string | null
   price?: Prisma.FloatNullableFilter<"PurchaseItem"> | number | null
+  digitalBillboardId?: Prisma.StringNullableFilter<"PurchaseItem"> | string | null
+  spotCount?: Prisma.IntNullableFilter<"PurchaseItem"> | number | null
   from?: Prisma.DateTimeFilter<"PurchaseItem"> | Date | string
   to?: Prisma.DateTimeFilter<"PurchaseItem"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"PurchaseItem"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PurchaseItem"> | Date | string
 }
 
-export type PurchaseItemCreateManyPurchaseInput = {
+export type PurchaseItemCreateWithoutDigitalBillboardInput = {
   id?: string
-  billboardId: number
+  billboardId?: number | null
   billboardCode?: string | null
   reference?: string | null
   departmentName?: string | null
   cityName?: string | null
   address?: string | null
   price?: number | null
+  spotCount?: number | null
+  from: Date | string
+  to: Date | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  purchase: Prisma.PurchaseCreateNestedOneWithoutItemsInput
+}
+
+export type PurchaseItemUncheckedCreateWithoutDigitalBillboardInput = {
+  id?: string
+  purchaseId: string
+  billboardId?: number | null
+  billboardCode?: string | null
+  reference?: string | null
+  departmentName?: string | null
+  cityName?: string | null
+  address?: string | null
+  price?: number | null
+  spotCount?: number | null
+  from: Date | string
+  to: Date | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type PurchaseItemCreateOrConnectWithoutDigitalBillboardInput = {
+  where: Prisma.PurchaseItemWhereUniqueInput
+  create: Prisma.XOR<Prisma.PurchaseItemCreateWithoutDigitalBillboardInput, Prisma.PurchaseItemUncheckedCreateWithoutDigitalBillboardInput>
+}
+
+export type PurchaseItemCreateManyDigitalBillboardInputEnvelope = {
+  data: Prisma.PurchaseItemCreateManyDigitalBillboardInput | Prisma.PurchaseItemCreateManyDigitalBillboardInput[]
+  skipDuplicates?: boolean
+}
+
+export type PurchaseItemUpsertWithWhereUniqueWithoutDigitalBillboardInput = {
+  where: Prisma.PurchaseItemWhereUniqueInput
+  update: Prisma.XOR<Prisma.PurchaseItemUpdateWithoutDigitalBillboardInput, Prisma.PurchaseItemUncheckedUpdateWithoutDigitalBillboardInput>
+  create: Prisma.XOR<Prisma.PurchaseItemCreateWithoutDigitalBillboardInput, Prisma.PurchaseItemUncheckedCreateWithoutDigitalBillboardInput>
+}
+
+export type PurchaseItemUpdateWithWhereUniqueWithoutDigitalBillboardInput = {
+  where: Prisma.PurchaseItemWhereUniqueInput
+  data: Prisma.XOR<Prisma.PurchaseItemUpdateWithoutDigitalBillboardInput, Prisma.PurchaseItemUncheckedUpdateWithoutDigitalBillboardInput>
+}
+
+export type PurchaseItemUpdateManyWithWhereWithoutDigitalBillboardInput = {
+  where: Prisma.PurchaseItemScalarWhereInput
+  data: Prisma.XOR<Prisma.PurchaseItemUpdateManyMutationInput, Prisma.PurchaseItemUncheckedUpdateManyWithoutDigitalBillboardInput>
+}
+
+export type PurchaseItemCreateManyPurchaseInput = {
+  id?: string
+  billboardId?: number | null
+  billboardCode?: string | null
+  reference?: string | null
+  departmentName?: string | null
+  cityName?: string | null
+  address?: string | null
+  price?: number | null
+  digitalBillboardId?: string | null
+  spotCount?: number | null
   from: Date | string
   to: Date | string
   createdAt?: Date | string
@@ -685,28 +855,32 @@ export type PurchaseItemCreateManyPurchaseInput = {
 
 export type PurchaseItemUpdateWithoutPurchaseInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  billboardId?: Prisma.IntFieldUpdateOperationsInput | number
+  billboardId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billboardCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cityName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  spotCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   from?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   to?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  digitalBillboard?: Prisma.DigitalBillboardUpdateOneWithoutPurchaseItemsNestedInput
 }
 
 export type PurchaseItemUncheckedUpdateWithoutPurchaseInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  billboardId?: Prisma.IntFieldUpdateOperationsInput | number
+  billboardId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billboardCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cityName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  digitalBillboardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  spotCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   from?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   to?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -715,13 +889,83 @@ export type PurchaseItemUncheckedUpdateWithoutPurchaseInput = {
 
 export type PurchaseItemUncheckedUpdateManyWithoutPurchaseInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  billboardId?: Prisma.IntFieldUpdateOperationsInput | number
+  billboardId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   billboardCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cityName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   price?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  digitalBillboardId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  spotCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  from?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  to?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type PurchaseItemCreateManyDigitalBillboardInput = {
+  id?: string
+  purchaseId: string
+  billboardId?: number | null
+  billboardCode?: string | null
+  reference?: string | null
+  departmentName?: string | null
+  cityName?: string | null
+  address?: string | null
+  price?: number | null
+  spotCount?: number | null
+  from: Date | string
+  to: Date | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type PurchaseItemUpdateWithoutDigitalBillboardInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  billboardId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  billboardCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cityName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  price?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  spotCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  from?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  to?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  purchase?: Prisma.PurchaseUpdateOneRequiredWithoutItemsNestedInput
+}
+
+export type PurchaseItemUncheckedUpdateWithoutDigitalBillboardInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  purchaseId?: Prisma.StringFieldUpdateOperationsInput | string
+  billboardId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  billboardCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cityName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  price?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  spotCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  from?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  to?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type PurchaseItemUncheckedUpdateManyWithoutDigitalBillboardInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  purchaseId?: Prisma.StringFieldUpdateOperationsInput | string
+  billboardId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  billboardCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cityName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  price?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  spotCount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   from?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   to?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -740,11 +984,14 @@ export type PurchaseItemSelect<ExtArgs extends runtime.Types.Extensions.Internal
   cityName?: boolean
   address?: boolean
   price?: boolean
+  digitalBillboardId?: boolean
+  spotCount?: boolean
   from?: boolean
   to?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   purchase?: boolean | Prisma.PurchaseDefaultArgs<ExtArgs>
+  digitalBillboard?: boolean | Prisma.PurchaseItem$digitalBillboardArgs<ExtArgs>
 }, ExtArgs["result"]["purchaseItem"]>
 
 export type PurchaseItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -757,11 +1004,14 @@ export type PurchaseItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   cityName?: boolean
   address?: boolean
   price?: boolean
+  digitalBillboardId?: boolean
+  spotCount?: boolean
   from?: boolean
   to?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   purchase?: boolean | Prisma.PurchaseDefaultArgs<ExtArgs>
+  digitalBillboard?: boolean | Prisma.PurchaseItem$digitalBillboardArgs<ExtArgs>
 }, ExtArgs["result"]["purchaseItem"]>
 
 export type PurchaseItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -774,11 +1024,14 @@ export type PurchaseItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   cityName?: boolean
   address?: boolean
   price?: boolean
+  digitalBillboardId?: boolean
+  spotCount?: boolean
   from?: boolean
   to?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   purchase?: boolean | Prisma.PurchaseDefaultArgs<ExtArgs>
+  digitalBillboard?: boolean | Prisma.PurchaseItem$digitalBillboardArgs<ExtArgs>
 }, ExtArgs["result"]["purchaseItem"]>
 
 export type PurchaseItemSelectScalar = {
@@ -791,38 +1044,46 @@ export type PurchaseItemSelectScalar = {
   cityName?: boolean
   address?: boolean
   price?: boolean
+  digitalBillboardId?: boolean
+  spotCount?: boolean
   from?: boolean
   to?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type PurchaseItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "purchaseId" | "billboardId" | "billboardCode" | "reference" | "departmentName" | "cityName" | "address" | "price" | "from" | "to" | "createdAt" | "updatedAt", ExtArgs["result"]["purchaseItem"]>
+export type PurchaseItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "purchaseId" | "billboardId" | "billboardCode" | "reference" | "departmentName" | "cityName" | "address" | "price" | "digitalBillboardId" | "spotCount" | "from" | "to" | "createdAt" | "updatedAt", ExtArgs["result"]["purchaseItem"]>
 export type PurchaseItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   purchase?: boolean | Prisma.PurchaseDefaultArgs<ExtArgs>
+  digitalBillboard?: boolean | Prisma.PurchaseItem$digitalBillboardArgs<ExtArgs>
 }
 export type PurchaseItemIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   purchase?: boolean | Prisma.PurchaseDefaultArgs<ExtArgs>
+  digitalBillboard?: boolean | Prisma.PurchaseItem$digitalBillboardArgs<ExtArgs>
 }
 export type PurchaseItemIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   purchase?: boolean | Prisma.PurchaseDefaultArgs<ExtArgs>
+  digitalBillboard?: boolean | Prisma.PurchaseItem$digitalBillboardArgs<ExtArgs>
 }
 
 export type $PurchaseItemPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "PurchaseItem"
   objects: {
     purchase: Prisma.$PurchasePayload<ExtArgs>
+    digitalBillboard: Prisma.$DigitalBillboardPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     purchaseId: string
-    billboardId: number
+    billboardId: number | null
     billboardCode: string | null
     reference: string | null
     departmentName: string | null
     cityName: string | null
     address: string | null
     price: number | null
+    digitalBillboardId: string | null
+    spotCount: number | null
     from: Date
     to: Date
     createdAt: Date
@@ -1222,6 +1483,7 @@ readonly fields: PurchaseItemFieldRefs;
 export interface Prisma__PurchaseItemClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   purchase<T extends Prisma.PurchaseDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PurchaseDefaultArgs<ExtArgs>>): Prisma.Prisma__PurchaseClient<runtime.Types.Result.GetResult<Prisma.$PurchasePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  digitalBillboard<T extends Prisma.PurchaseItem$digitalBillboardArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PurchaseItem$digitalBillboardArgs<ExtArgs>>): Prisma.Prisma__DigitalBillboardClient<runtime.Types.Result.GetResult<Prisma.$DigitalBillboardPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1260,6 +1522,8 @@ export interface PurchaseItemFieldRefs {
   readonly cityName: Prisma.FieldRef<"PurchaseItem", 'String'>
   readonly address: Prisma.FieldRef<"PurchaseItem", 'String'>
   readonly price: Prisma.FieldRef<"PurchaseItem", 'Float'>
+  readonly digitalBillboardId: Prisma.FieldRef<"PurchaseItem", 'String'>
+  readonly spotCount: Prisma.FieldRef<"PurchaseItem", 'Int'>
   readonly from: Prisma.FieldRef<"PurchaseItem", 'DateTime'>
   readonly to: Prisma.FieldRef<"PurchaseItem", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"PurchaseItem", 'DateTime'>
@@ -1657,6 +1921,25 @@ export type PurchaseItemDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.
    * Limit how many PurchaseItems to delete.
    */
   limit?: number
+}
+
+/**
+ * PurchaseItem.digitalBillboard
+ */
+export type PurchaseItem$digitalBillboardArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DigitalBillboard
+   */
+  select?: Prisma.DigitalBillboardSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DigitalBillboard
+   */
+  omit?: Prisma.DigitalBillboardOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DigitalBillboardInclude<ExtArgs> | null
+  where?: Prisma.DigitalBillboardWhereInput
 }
 
 /**

@@ -99,8 +99,15 @@ async function SuccessContent({
                 >
                   <div className="min-w-0">
                     <p className="font-medium text-foreground">
-                      {item.billboardCode ?? `Valla ${item.billboardId}`}
+                      {item.digitalBillboardId
+                        ? (item.billboardCode ?? "Valla digital")
+                        : (item.billboardCode ?? `Valla ${item.billboardId}`)}
                     </p>
+                    {item.digitalBillboardId && item.spotCount != null && (
+                      <p className="text-sm text-muted-foreground">
+                        Paquete: {item.spotCount} spots
+                      </p>
+                    )}
                     <p className="truncate text-sm text-muted-foreground">
                       {item.reference ?? "—"}
                     </p>

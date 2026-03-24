@@ -31,6 +31,7 @@ export type DigitalBillboardAvgAggregateOutputType = {
   longitude: number | null
   price: number | null
   maxSpots: number | null
+  departmentId: number | null
 }
 
 export type DigitalBillboardSumAggregateOutputType = {
@@ -38,6 +39,7 @@ export type DigitalBillboardSumAggregateOutputType = {
   longitude: number | null
   price: number | null
   maxSpots: number | null
+  departmentId: number | null
 }
 
 export type DigitalBillboardMinAggregateOutputType = {
@@ -50,6 +52,8 @@ export type DigitalBillboardMinAggregateOutputType = {
   price: number | null
   imageId: string | null
   maxSpots: number | null
+  departmentId: number | null
+  departmentName: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -64,6 +68,8 @@ export type DigitalBillboardMaxAggregateOutputType = {
   price: number | null
   imageId: string | null
   maxSpots: number | null
+  departmentId: number | null
+  departmentName: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -78,6 +84,8 @@ export type DigitalBillboardCountAggregateOutputType = {
   price: number
   imageId: number
   maxSpots: number
+  departmentId: number
+  departmentName: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -89,6 +97,7 @@ export type DigitalBillboardAvgAggregateInputType = {
   longitude?: true
   price?: true
   maxSpots?: true
+  departmentId?: true
 }
 
 export type DigitalBillboardSumAggregateInputType = {
@@ -96,6 +105,7 @@ export type DigitalBillboardSumAggregateInputType = {
   longitude?: true
   price?: true
   maxSpots?: true
+  departmentId?: true
 }
 
 export type DigitalBillboardMinAggregateInputType = {
@@ -108,6 +118,8 @@ export type DigitalBillboardMinAggregateInputType = {
   price?: true
   imageId?: true
   maxSpots?: true
+  departmentId?: true
+  departmentName?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -122,6 +134,8 @@ export type DigitalBillboardMaxAggregateInputType = {
   price?: true
   imageId?: true
   maxSpots?: true
+  departmentId?: true
+  departmentName?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -136,6 +150,8 @@ export type DigitalBillboardCountAggregateInputType = {
   price?: true
   imageId?: true
   maxSpots?: true
+  departmentId?: true
+  departmentName?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -237,6 +253,8 @@ export type DigitalBillboardGroupByOutputType = {
   price: number
   imageId: string | null
   maxSpots: number
+  departmentId: number | null
+  departmentName: string | null
   createdAt: Date
   updatedAt: Date
   _count: DigitalBillboardCountAggregateOutputType | null
@@ -274,10 +292,13 @@ export type DigitalBillboardWhereInput = {
   price?: Prisma.FloatFilter<"DigitalBillboard"> | number
   imageId?: Prisma.StringNullableFilter<"DigitalBillboard"> | string | null
   maxSpots?: Prisma.IntFilter<"DigitalBillboard"> | number
+  departmentId?: Prisma.IntNullableFilter<"DigitalBillboard"> | number | null
+  departmentName?: Prisma.StringNullableFilter<"DigitalBillboard"> | string | null
   createdAt?: Prisma.DateTimeFilter<"DigitalBillboard"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"DigitalBillboard"> | Date | string
   image?: Prisma.XOR<Prisma.ImageNullableScalarRelationFilter, Prisma.ImageWhereInput> | null
   digitalBillboardUsages?: Prisma.DigitalBillboardUsageListRelationFilter
+  purchaseItems?: Prisma.PurchaseItemListRelationFilter
 }
 
 export type DigitalBillboardOrderByWithRelationInput = {
@@ -290,10 +311,13 @@ export type DigitalBillboardOrderByWithRelationInput = {
   price?: Prisma.SortOrder
   imageId?: Prisma.SortOrderInput | Prisma.SortOrder
   maxSpots?: Prisma.SortOrder
+  departmentId?: Prisma.SortOrderInput | Prisma.SortOrder
+  departmentName?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   image?: Prisma.ImageOrderByWithRelationInput
   digitalBillboardUsages?: Prisma.DigitalBillboardUsageOrderByRelationAggregateInput
+  purchaseItems?: Prisma.PurchaseItemOrderByRelationAggregateInput
 }
 
 export type DigitalBillboardWhereUniqueInput = Prisma.AtLeast<{
@@ -309,10 +333,13 @@ export type DigitalBillboardWhereUniqueInput = Prisma.AtLeast<{
   price?: Prisma.FloatFilter<"DigitalBillboard"> | number
   imageId?: Prisma.StringNullableFilter<"DigitalBillboard"> | string | null
   maxSpots?: Prisma.IntFilter<"DigitalBillboard"> | number
+  departmentId?: Prisma.IntNullableFilter<"DigitalBillboard"> | number | null
+  departmentName?: Prisma.StringNullableFilter<"DigitalBillboard"> | string | null
   createdAt?: Prisma.DateTimeFilter<"DigitalBillboard"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"DigitalBillboard"> | Date | string
   image?: Prisma.XOR<Prisma.ImageNullableScalarRelationFilter, Prisma.ImageWhereInput> | null
   digitalBillboardUsages?: Prisma.DigitalBillboardUsageListRelationFilter
+  purchaseItems?: Prisma.PurchaseItemListRelationFilter
 }, "id" | "code">
 
 export type DigitalBillboardOrderByWithAggregationInput = {
@@ -325,6 +352,8 @@ export type DigitalBillboardOrderByWithAggregationInput = {
   price?: Prisma.SortOrder
   imageId?: Prisma.SortOrderInput | Prisma.SortOrder
   maxSpots?: Prisma.SortOrder
+  departmentId?: Prisma.SortOrderInput | Prisma.SortOrder
+  departmentName?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.DigitalBillboardCountOrderByAggregateInput
@@ -347,6 +376,8 @@ export type DigitalBillboardScalarWhereWithAggregatesInput = {
   price?: Prisma.FloatWithAggregatesFilter<"DigitalBillboard"> | number
   imageId?: Prisma.StringNullableWithAggregatesFilter<"DigitalBillboard"> | string | null
   maxSpots?: Prisma.IntWithAggregatesFilter<"DigitalBillboard"> | number
+  departmentId?: Prisma.IntNullableWithAggregatesFilter<"DigitalBillboard"> | number | null
+  departmentName?: Prisma.StringNullableWithAggregatesFilter<"DigitalBillboard"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"DigitalBillboard"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"DigitalBillboard"> | Date | string
 }
@@ -360,10 +391,13 @@ export type DigitalBillboardCreateInput = {
   longitude: number
   price: number
   maxSpots?: number
+  departmentId?: number | null
+  departmentName?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   image?: Prisma.ImageCreateNestedOneWithoutDigitalBillboardsInput
   digitalBillboardUsages?: Prisma.DigitalBillboardUsageCreateNestedManyWithoutDigitalBillboardInput
+  purchaseItems?: Prisma.PurchaseItemCreateNestedManyWithoutDigitalBillboardInput
 }
 
 export type DigitalBillboardUncheckedCreateInput = {
@@ -376,9 +410,12 @@ export type DigitalBillboardUncheckedCreateInput = {
   price: number
   imageId?: string | null
   maxSpots?: number
+  departmentId?: number | null
+  departmentName?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   digitalBillboardUsages?: Prisma.DigitalBillboardUsageUncheckedCreateNestedManyWithoutDigitalBillboardInput
+  purchaseItems?: Prisma.PurchaseItemUncheckedCreateNestedManyWithoutDigitalBillboardInput
 }
 
 export type DigitalBillboardUpdateInput = {
@@ -390,10 +427,13 @@ export type DigitalBillboardUpdateInput = {
   longitude?: Prisma.FloatFieldUpdateOperationsInput | number
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   maxSpots?: Prisma.IntFieldUpdateOperationsInput | number
+  departmentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   image?: Prisma.ImageUpdateOneWithoutDigitalBillboardsNestedInput
   digitalBillboardUsages?: Prisma.DigitalBillboardUsageUpdateManyWithoutDigitalBillboardNestedInput
+  purchaseItems?: Prisma.PurchaseItemUpdateManyWithoutDigitalBillboardNestedInput
 }
 
 export type DigitalBillboardUncheckedUpdateInput = {
@@ -406,9 +446,12 @@ export type DigitalBillboardUncheckedUpdateInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   imageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   maxSpots?: Prisma.IntFieldUpdateOperationsInput | number
+  departmentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   digitalBillboardUsages?: Prisma.DigitalBillboardUsageUncheckedUpdateManyWithoutDigitalBillboardNestedInput
+  purchaseItems?: Prisma.PurchaseItemUncheckedUpdateManyWithoutDigitalBillboardNestedInput
 }
 
 export type DigitalBillboardCreateManyInput = {
@@ -421,6 +464,8 @@ export type DigitalBillboardCreateManyInput = {
   price: number
   imageId?: string | null
   maxSpots?: number
+  departmentId?: number | null
+  departmentName?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -434,6 +479,8 @@ export type DigitalBillboardUpdateManyMutationInput = {
   longitude?: Prisma.FloatFieldUpdateOperationsInput | number
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   maxSpots?: Prisma.IntFieldUpdateOperationsInput | number
+  departmentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -448,8 +495,15 @@ export type DigitalBillboardUncheckedUpdateManyInput = {
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   imageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   maxSpots?: Prisma.IntFieldUpdateOperationsInput | number
+  departmentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type DigitalBillboardNullableScalarRelationFilter = {
+  is?: Prisma.DigitalBillboardWhereInput | null
+  isNot?: Prisma.DigitalBillboardWhereInput | null
 }
 
 export type DigitalBillboardListRelationFilter = {
@@ -477,6 +531,8 @@ export type DigitalBillboardCountOrderByAggregateInput = {
   price?: Prisma.SortOrder
   imageId?: Prisma.SortOrder
   maxSpots?: Prisma.SortOrder
+  departmentId?: Prisma.SortOrder
+  departmentName?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -486,6 +542,7 @@ export type DigitalBillboardAvgOrderByAggregateInput = {
   longitude?: Prisma.SortOrder
   price?: Prisma.SortOrder
   maxSpots?: Prisma.SortOrder
+  departmentId?: Prisma.SortOrder
 }
 
 export type DigitalBillboardMaxOrderByAggregateInput = {
@@ -498,6 +555,8 @@ export type DigitalBillboardMaxOrderByAggregateInput = {
   price?: Prisma.SortOrder
   imageId?: Prisma.SortOrder
   maxSpots?: Prisma.SortOrder
+  departmentId?: Prisma.SortOrder
+  departmentName?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -512,6 +571,8 @@ export type DigitalBillboardMinOrderByAggregateInput = {
   price?: Prisma.SortOrder
   imageId?: Prisma.SortOrder
   maxSpots?: Prisma.SortOrder
+  departmentId?: Prisma.SortOrder
+  departmentName?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -521,6 +582,23 @@ export type DigitalBillboardSumOrderByAggregateInput = {
   longitude?: Prisma.SortOrder
   price?: Prisma.SortOrder
   maxSpots?: Prisma.SortOrder
+  departmentId?: Prisma.SortOrder
+}
+
+export type DigitalBillboardCreateNestedOneWithoutPurchaseItemsInput = {
+  create?: Prisma.XOR<Prisma.DigitalBillboardCreateWithoutPurchaseItemsInput, Prisma.DigitalBillboardUncheckedCreateWithoutPurchaseItemsInput>
+  connectOrCreate?: Prisma.DigitalBillboardCreateOrConnectWithoutPurchaseItemsInput
+  connect?: Prisma.DigitalBillboardWhereUniqueInput
+}
+
+export type DigitalBillboardUpdateOneWithoutPurchaseItemsNestedInput = {
+  create?: Prisma.XOR<Prisma.DigitalBillboardCreateWithoutPurchaseItemsInput, Prisma.DigitalBillboardUncheckedCreateWithoutPurchaseItemsInput>
+  connectOrCreate?: Prisma.DigitalBillboardCreateOrConnectWithoutPurchaseItemsInput
+  upsert?: Prisma.DigitalBillboardUpsertWithoutPurchaseItemsInput
+  disconnect?: Prisma.DigitalBillboardWhereInput | boolean
+  delete?: Prisma.DigitalBillboardWhereInput | boolean
+  connect?: Prisma.DigitalBillboardWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.DigitalBillboardUpdateToOneWithWhereWithoutPurchaseItemsInput, Prisma.DigitalBillboardUpdateWithoutPurchaseItemsInput>, Prisma.DigitalBillboardUncheckedUpdateWithoutPurchaseItemsInput>
 }
 
 export type DigitalBillboardCreateNestedManyWithoutImageInput = {
@@ -587,6 +665,90 @@ export type FloatFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type DigitalBillboardCreateWithoutPurchaseItemsInput = {
+  id?: string
+  code: string
+  name: string
+  address: string
+  latitude: number
+  longitude: number
+  price: number
+  maxSpots?: number
+  departmentId?: number | null
+  departmentName?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  image?: Prisma.ImageCreateNestedOneWithoutDigitalBillboardsInput
+  digitalBillboardUsages?: Prisma.DigitalBillboardUsageCreateNestedManyWithoutDigitalBillboardInput
+}
+
+export type DigitalBillboardUncheckedCreateWithoutPurchaseItemsInput = {
+  id?: string
+  code: string
+  name: string
+  address: string
+  latitude: number
+  longitude: number
+  price: number
+  imageId?: string | null
+  maxSpots?: number
+  departmentId?: number | null
+  departmentName?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  digitalBillboardUsages?: Prisma.DigitalBillboardUsageUncheckedCreateNestedManyWithoutDigitalBillboardInput
+}
+
+export type DigitalBillboardCreateOrConnectWithoutPurchaseItemsInput = {
+  where: Prisma.DigitalBillboardWhereUniqueInput
+  create: Prisma.XOR<Prisma.DigitalBillboardCreateWithoutPurchaseItemsInput, Prisma.DigitalBillboardUncheckedCreateWithoutPurchaseItemsInput>
+}
+
+export type DigitalBillboardUpsertWithoutPurchaseItemsInput = {
+  update: Prisma.XOR<Prisma.DigitalBillboardUpdateWithoutPurchaseItemsInput, Prisma.DigitalBillboardUncheckedUpdateWithoutPurchaseItemsInput>
+  create: Prisma.XOR<Prisma.DigitalBillboardCreateWithoutPurchaseItemsInput, Prisma.DigitalBillboardUncheckedCreateWithoutPurchaseItemsInput>
+  where?: Prisma.DigitalBillboardWhereInput
+}
+
+export type DigitalBillboardUpdateToOneWithWhereWithoutPurchaseItemsInput = {
+  where?: Prisma.DigitalBillboardWhereInput
+  data: Prisma.XOR<Prisma.DigitalBillboardUpdateWithoutPurchaseItemsInput, Prisma.DigitalBillboardUncheckedUpdateWithoutPurchaseItemsInput>
+}
+
+export type DigitalBillboardUpdateWithoutPurchaseItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  latitude?: Prisma.FloatFieldUpdateOperationsInput | number
+  longitude?: Prisma.FloatFieldUpdateOperationsInput | number
+  price?: Prisma.FloatFieldUpdateOperationsInput | number
+  maxSpots?: Prisma.IntFieldUpdateOperationsInput | number
+  departmentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  image?: Prisma.ImageUpdateOneWithoutDigitalBillboardsNestedInput
+  digitalBillboardUsages?: Prisma.DigitalBillboardUsageUpdateManyWithoutDigitalBillboardNestedInput
+}
+
+export type DigitalBillboardUncheckedUpdateWithoutPurchaseItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  latitude?: Prisma.FloatFieldUpdateOperationsInput | number
+  longitude?: Prisma.FloatFieldUpdateOperationsInput | number
+  price?: Prisma.FloatFieldUpdateOperationsInput | number
+  imageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxSpots?: Prisma.IntFieldUpdateOperationsInput | number
+  departmentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  digitalBillboardUsages?: Prisma.DigitalBillboardUsageUncheckedUpdateManyWithoutDigitalBillboardNestedInput
+}
+
 export type DigitalBillboardCreateWithoutImageInput = {
   id?: string
   code: string
@@ -596,9 +758,12 @@ export type DigitalBillboardCreateWithoutImageInput = {
   longitude: number
   price: number
   maxSpots?: number
+  departmentId?: number | null
+  departmentName?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   digitalBillboardUsages?: Prisma.DigitalBillboardUsageCreateNestedManyWithoutDigitalBillboardInput
+  purchaseItems?: Prisma.PurchaseItemCreateNestedManyWithoutDigitalBillboardInput
 }
 
 export type DigitalBillboardUncheckedCreateWithoutImageInput = {
@@ -610,9 +775,12 @@ export type DigitalBillboardUncheckedCreateWithoutImageInput = {
   longitude: number
   price: number
   maxSpots?: number
+  departmentId?: number | null
+  departmentName?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   digitalBillboardUsages?: Prisma.DigitalBillboardUsageUncheckedCreateNestedManyWithoutDigitalBillboardInput
+  purchaseItems?: Prisma.PurchaseItemUncheckedCreateNestedManyWithoutDigitalBillboardInput
 }
 
 export type DigitalBillboardCreateOrConnectWithoutImageInput = {
@@ -654,6 +822,8 @@ export type DigitalBillboardScalarWhereInput = {
   price?: Prisma.FloatFilter<"DigitalBillboard"> | number
   imageId?: Prisma.StringNullableFilter<"DigitalBillboard"> | string | null
   maxSpots?: Prisma.IntFilter<"DigitalBillboard"> | number
+  departmentId?: Prisma.IntNullableFilter<"DigitalBillboard"> | number | null
+  departmentName?: Prisma.StringNullableFilter<"DigitalBillboard"> | string | null
   createdAt?: Prisma.DateTimeFilter<"DigitalBillboard"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"DigitalBillboard"> | Date | string
 }
@@ -667,9 +837,12 @@ export type DigitalBillboardCreateWithoutDigitalBillboardUsagesInput = {
   longitude: number
   price: number
   maxSpots?: number
+  departmentId?: number | null
+  departmentName?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   image?: Prisma.ImageCreateNestedOneWithoutDigitalBillboardsInput
+  purchaseItems?: Prisma.PurchaseItemCreateNestedManyWithoutDigitalBillboardInput
 }
 
 export type DigitalBillboardUncheckedCreateWithoutDigitalBillboardUsagesInput = {
@@ -682,8 +855,11 @@ export type DigitalBillboardUncheckedCreateWithoutDigitalBillboardUsagesInput = 
   price: number
   imageId?: string | null
   maxSpots?: number
+  departmentId?: number | null
+  departmentName?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  purchaseItems?: Prisma.PurchaseItemUncheckedCreateNestedManyWithoutDigitalBillboardInput
 }
 
 export type DigitalBillboardCreateOrConnectWithoutDigitalBillboardUsagesInput = {
@@ -711,9 +887,12 @@ export type DigitalBillboardUpdateWithoutDigitalBillboardUsagesInput = {
   longitude?: Prisma.FloatFieldUpdateOperationsInput | number
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   maxSpots?: Prisma.IntFieldUpdateOperationsInput | number
+  departmentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   image?: Prisma.ImageUpdateOneWithoutDigitalBillboardsNestedInput
+  purchaseItems?: Prisma.PurchaseItemUpdateManyWithoutDigitalBillboardNestedInput
 }
 
 export type DigitalBillboardUncheckedUpdateWithoutDigitalBillboardUsagesInput = {
@@ -726,8 +905,11 @@ export type DigitalBillboardUncheckedUpdateWithoutDigitalBillboardUsagesInput = 
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   imageId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   maxSpots?: Prisma.IntFieldUpdateOperationsInput | number
+  departmentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  purchaseItems?: Prisma.PurchaseItemUncheckedUpdateManyWithoutDigitalBillboardNestedInput
 }
 
 export type DigitalBillboardCreateManyImageInput = {
@@ -739,6 +921,8 @@ export type DigitalBillboardCreateManyImageInput = {
   longitude: number
   price: number
   maxSpots?: number
+  departmentId?: number | null
+  departmentName?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -752,9 +936,12 @@ export type DigitalBillboardUpdateWithoutImageInput = {
   longitude?: Prisma.FloatFieldUpdateOperationsInput | number
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   maxSpots?: Prisma.IntFieldUpdateOperationsInput | number
+  departmentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   digitalBillboardUsages?: Prisma.DigitalBillboardUsageUpdateManyWithoutDigitalBillboardNestedInput
+  purchaseItems?: Prisma.PurchaseItemUpdateManyWithoutDigitalBillboardNestedInput
 }
 
 export type DigitalBillboardUncheckedUpdateWithoutImageInput = {
@@ -766,9 +953,12 @@ export type DigitalBillboardUncheckedUpdateWithoutImageInput = {
   longitude?: Prisma.FloatFieldUpdateOperationsInput | number
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   maxSpots?: Prisma.IntFieldUpdateOperationsInput | number
+  departmentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   digitalBillboardUsages?: Prisma.DigitalBillboardUsageUncheckedUpdateManyWithoutDigitalBillboardNestedInput
+  purchaseItems?: Prisma.PurchaseItemUncheckedUpdateManyWithoutDigitalBillboardNestedInput
 }
 
 export type DigitalBillboardUncheckedUpdateManyWithoutImageInput = {
@@ -780,6 +970,8 @@ export type DigitalBillboardUncheckedUpdateManyWithoutImageInput = {
   longitude?: Prisma.FloatFieldUpdateOperationsInput | number
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   maxSpots?: Prisma.IntFieldUpdateOperationsInput | number
+  departmentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  departmentName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -791,10 +983,12 @@ export type DigitalBillboardUncheckedUpdateManyWithoutImageInput = {
 
 export type DigitalBillboardCountOutputType = {
   digitalBillboardUsages: number
+  purchaseItems: number
 }
 
 export type DigitalBillboardCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   digitalBillboardUsages?: boolean | DigitalBillboardCountOutputTypeCountDigitalBillboardUsagesArgs
+  purchaseItems?: boolean | DigitalBillboardCountOutputTypeCountPurchaseItemsArgs
 }
 
 /**
@@ -814,6 +1008,13 @@ export type DigitalBillboardCountOutputTypeCountDigitalBillboardUsagesArgs<ExtAr
   where?: Prisma.DigitalBillboardUsageWhereInput
 }
 
+/**
+ * DigitalBillboardCountOutputType without action
+ */
+export type DigitalBillboardCountOutputTypeCountPurchaseItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PurchaseItemWhereInput
+}
+
 
 export type DigitalBillboardSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -825,10 +1026,13 @@ export type DigitalBillboardSelect<ExtArgs extends runtime.Types.Extensions.Inte
   price?: boolean
   imageId?: boolean
   maxSpots?: boolean
+  departmentId?: boolean
+  departmentName?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   image?: boolean | Prisma.DigitalBillboard$imageArgs<ExtArgs>
   digitalBillboardUsages?: boolean | Prisma.DigitalBillboard$digitalBillboardUsagesArgs<ExtArgs>
+  purchaseItems?: boolean | Prisma.DigitalBillboard$purchaseItemsArgs<ExtArgs>
   _count?: boolean | Prisma.DigitalBillboardCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["digitalBillboard"]>
 
@@ -842,6 +1046,8 @@ export type DigitalBillboardSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   price?: boolean
   imageId?: boolean
   maxSpots?: boolean
+  departmentId?: boolean
+  departmentName?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   image?: boolean | Prisma.DigitalBillboard$imageArgs<ExtArgs>
@@ -857,6 +1063,8 @@ export type DigitalBillboardSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   price?: boolean
   imageId?: boolean
   maxSpots?: boolean
+  departmentId?: boolean
+  departmentName?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   image?: boolean | Prisma.DigitalBillboard$imageArgs<ExtArgs>
@@ -872,14 +1080,17 @@ export type DigitalBillboardSelectScalar = {
   price?: boolean
   imageId?: boolean
   maxSpots?: boolean
+  departmentId?: boolean
+  departmentName?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type DigitalBillboardOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "name" | "address" | "latitude" | "longitude" | "price" | "imageId" | "maxSpots" | "createdAt" | "updatedAt", ExtArgs["result"]["digitalBillboard"]>
+export type DigitalBillboardOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "name" | "address" | "latitude" | "longitude" | "price" | "imageId" | "maxSpots" | "departmentId" | "departmentName" | "createdAt" | "updatedAt", ExtArgs["result"]["digitalBillboard"]>
 export type DigitalBillboardInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   image?: boolean | Prisma.DigitalBillboard$imageArgs<ExtArgs>
   digitalBillboardUsages?: boolean | Prisma.DigitalBillboard$digitalBillboardUsagesArgs<ExtArgs>
+  purchaseItems?: boolean | Prisma.DigitalBillboard$purchaseItemsArgs<ExtArgs>
   _count?: boolean | Prisma.DigitalBillboardCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type DigitalBillboardIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -894,6 +1105,7 @@ export type $DigitalBillboardPayload<ExtArgs extends runtime.Types.Extensions.In
   objects: {
     image: Prisma.$ImagePayload<ExtArgs> | null
     digitalBillboardUsages: Prisma.$DigitalBillboardUsagePayload<ExtArgs>[]
+    purchaseItems: Prisma.$PurchaseItemPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -905,6 +1117,8 @@ export type $DigitalBillboardPayload<ExtArgs extends runtime.Types.Extensions.In
     price: number
     imageId: string | null
     maxSpots: number
+    departmentId: number | null
+    departmentName: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["digitalBillboard"]>
@@ -1303,6 +1517,7 @@ export interface Prisma__DigitalBillboardClient<T, Null = never, ExtArgs extends
   readonly [Symbol.toStringTag]: "PrismaPromise"
   image<T extends Prisma.DigitalBillboard$imageArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DigitalBillboard$imageArgs<ExtArgs>>): Prisma.Prisma__ImageClient<runtime.Types.Result.GetResult<Prisma.$ImagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   digitalBillboardUsages<T extends Prisma.DigitalBillboard$digitalBillboardUsagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DigitalBillboard$digitalBillboardUsagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DigitalBillboardUsagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  purchaseItems<T extends Prisma.DigitalBillboard$purchaseItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DigitalBillboard$purchaseItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PurchaseItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1341,6 +1556,8 @@ export interface DigitalBillboardFieldRefs {
   readonly price: Prisma.FieldRef<"DigitalBillboard", 'Float'>
   readonly imageId: Prisma.FieldRef<"DigitalBillboard", 'String'>
   readonly maxSpots: Prisma.FieldRef<"DigitalBillboard", 'Int'>
+  readonly departmentId: Prisma.FieldRef<"DigitalBillboard", 'Int'>
+  readonly departmentName: Prisma.FieldRef<"DigitalBillboard", 'String'>
   readonly createdAt: Prisma.FieldRef<"DigitalBillboard", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"DigitalBillboard", 'DateTime'>
 }
@@ -1779,6 +1996,30 @@ export type DigitalBillboard$digitalBillboardUsagesArgs<ExtArgs extends runtime.
   take?: number
   skip?: number
   distinct?: Prisma.DigitalBillboardUsageScalarFieldEnum | Prisma.DigitalBillboardUsageScalarFieldEnum[]
+}
+
+/**
+ * DigitalBillboard.purchaseItems
+ */
+export type DigitalBillboard$purchaseItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PurchaseItem
+   */
+  select?: Prisma.PurchaseItemSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PurchaseItem
+   */
+  omit?: Prisma.PurchaseItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PurchaseItemInclude<ExtArgs> | null
+  where?: Prisma.PurchaseItemWhereInput
+  orderBy?: Prisma.PurchaseItemOrderByWithRelationInput | Prisma.PurchaseItemOrderByWithRelationInput[]
+  cursor?: Prisma.PurchaseItemWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PurchaseItemScalarFieldEnum | Prisma.PurchaseItemScalarFieldEnum[]
 }
 
 /**

@@ -27,7 +27,9 @@ import {
 
 type PurchaseItem = {
   id: string;
-  billboardId: number;
+  billboardId: number | null;
+  digitalBillboardId: string | null;
+  spotCount: number | null;
   billboardCode: string | null;
   reference: string | null;
   departmentName: string | null;
@@ -240,8 +242,16 @@ export function PurchasesTable({ purchases }: PurchasesTableProps) {
                       <div className="flex items-start justify-between gap-2">
                         <div className="min-w-0">
                           <p className="text-xs font-semibold text-foreground">
-                            {item.billboardCode ?? `Valla ${item.billboardId}`}
+                            {item.digitalBillboardId
+                              ? (item.billboardCode ?? "Valla digital")
+                              : (item.billboardCode ??
+                                `Valla ${item.billboardId ?? "—"}`)}
                           </p>
+                          {item.digitalBillboardId && item.spotCount != null && (
+                            <p className="mt-0.5 text-[11px] text-muted-foreground">
+                              {item.spotCount} spots
+                            </p>
+                          )}
                           <p className="mt-0.5 line-clamp-2 text-[11px] text-muted-foreground">
                             {item.reference ?? "—"}
                           </p>

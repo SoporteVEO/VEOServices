@@ -143,13 +143,17 @@ model PurchaseItem {
   purchaseId String
   purchase   Purchase @relation(fields: [purchaseId], references: [id], onDelete: Cascade)
 
-  billboardId    Int
+  billboardId Int?
   billboardCode  String?
   reference      String?
   departmentName String?
   cityName       String?
   address        String?
   price          Float?
+
+  digitalBillboardId String?
+  digitalBillboard   DigitalBillboard? @relation(fields: [digitalBillboardId], references: [id], onDelete: SetNull)
+  spotCount          Int?
 
   from DateTime
   to   DateTime
@@ -158,6 +162,7 @@ model PurchaseItem {
   updatedAt DateTime @updatedAt
 
   @@index([billboardId, from, to])
+  @@index([digitalBillboardId, from, to])
   @@map("purchase_items")
 }
 
@@ -200,9 +205,12 @@ model DigitalBillboard {
   image                  Image?                  @relation(fields: [imageId], references: [id])
   imageId                String?
   maxSpots               Int                     @default(900)
+  departmentId           Int?                    @map("department_id")
+  departmentName         String?                 @map("department_name")
   createdAt              DateTime                @default(now())
   updatedAt              DateTime                @updatedAt
   digitalBillboardUsages DigitalBillboardUsage[]
+  purchaseItems          PurchaseItem[]
 
   @@map("digital_billboards")
 }

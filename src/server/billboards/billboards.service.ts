@@ -125,7 +125,9 @@ class BillboardsService {
         },
       });
       purchasedByBillboardId = new Set(
-        overlappingItems.map((i) => i.billboardId)
+        overlappingItems
+          .map((i) => i.billboardId)
+          .filter((id): id is number => id != null)
       );
     }
 

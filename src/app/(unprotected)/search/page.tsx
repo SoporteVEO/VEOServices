@@ -4,8 +4,16 @@ import {
   getCachedAvailableBillboardsByState,
   getCachedAvailableStates,
 } from "@/server/billboards/billboards.service";
+import {
+  getCachedAvailableDigitalBillboards,
+  getCachedDigitalShopDepartments,
+} from "@/server/digital-billboards/shop.service";
 import { SearchSection } from "@/components/pages/search/search-section";
 import { parseYYYYMMDD, toYYYYMMDD } from "@/lib/utils";
+import {
+  isDigitalSpotOption,
+  parseSpotsSearchParam,
+} from "@/lib/digital-spots";
 
 function startOfToday() {
   const d = new Date();
@@ -19,10 +27,18 @@ function addDays(date: Date, days: number) {
   return d;
 }
 
+type SearchParamsShape = {
+  stateId?: string;
+  from?: string;
+  to?: string;
+  tipo?: string;
+  spots?: string;
+};
+
 export default function SearchPage({
   searchParams,
 }: {
-  searchParams: Promise<{ stateId?: string; from?: string; to?: string }>;
+  searchParams: Promise<SearchParamsShape>;
 }) {
   return (
     <div className="relative flex min-h-screen flex-col overflow-hidden bg-background">
@@ -77,9 +93,15 @@ export default function SearchPage({
 async function SearchContent({
   searchParams,
 }: {
-  searchParams: Promise<{ stateId?: string; from?: string; to?: string }>;
+  searchParams: Promise<SearchParamsShape>;
 }) {
-  const { stateId, from: fromParam, to: toParam } = await searchParams;
+  const {
+    stateId,
+    from: fromParam,
+    to: toParam,
+    tipo: tipoParam,
+    spots: spotsParam,
+  } = await searchParams;
 
   let from = startOfToday();
   let to = addDays(from, 30);
@@ -93,29 +115,73 @@ async function SearchContent({
   const fromStr = toYYYYMMDD(from);
   const toStr = toYYYYMMDD(to);
 
-  const states = await getCachedAvailableStates(from, to);
+  const mode = tipoParam === "digital" ? "digital" : "estatica";
+  const digitalSpots = parseSpotsSearchParam(spotsParam);
+
+  const staticStates =
+    mode === "estatica" ? await getCachedAvailableStates(from, to) : [];
+  const digitalDepartments =
+    mode === "digital" ? await getCachedDigitalShopDepartments() : [];
+
+  const states = mode === "estatica" ? staticStates : digitalDepartments;
+  const showStateFilter = states.length > 0;
 
   const parsed = stateId ? Number(stateId) : NaN;
   const selectedDepartamentoId = Number.isFinite(parsed) ? parsed : null;
-  const fallbackDepartamentoId = states[0]?.departmentId ?? null;
-  const effectiveDepartamentoId =
-    selectedDepartamentoId ?? fallbackDepartamentoId;
+
+  let effectiveDepartamentoId: number | null = null;
+  if (mode === "estatica") {
+    const fallbackDepartamentoId = staticStates[0]?.departmentId ?? null;
+    effectiveDepartamentoId = selectedDepartamentoId ?? fallbackDepartamentoId;
+  } else if (digitalDepartments.length > 0) {
+    const fallback = digitalDepartments[0]!.departmentId;
+    const inList =
+      selectedDepartamentoId != null &&
+      digitalDepartments.some((d) => d.departmentId === selectedDepartamentoId);
+    effectiveDepartamentoId = inList ? selectedDepartamentoId : fallback;
+  } else {
+    effectiveDepartamentoId = null;
+  }
 
   const params = new URLSearchParams();
   params.set("from", fromStr);
   params.set("to", toStr);
-  if (effectiveDepartamentoId != null) {
+  if (mode === "digital") {
+    params.set("tipo", "digital");
+    params.set("spots", String(digitalSpots));
+  }
+  if (showStateFilter && effectiveDepartamentoId != null) {
     params.set("stateId", String(effectiveDepartamentoId));
   }
   const canonical = `/search?${params.toString()}`;
+
   if (
     (fromParam !== fromStr || toParam !== toStr) &&
     (fromParam != null || toParam != null)
   ) {
     redirect(canonical);
   }
+
+  if (mode === "estatica") {
+    if (tipoParam === "digital" || spotsParam != null) {
+      redirect(canonical);
+    }
+  } else {
+    const rawSpots = spotsParam ?? "";
+    if (
+      rawSpots === "" ||
+      !isDigitalSpotOption(Number(rawSpots)) ||
+      Number(rawSpots) !== digitalSpots
+    ) {
+      redirect(canonical);
+    }
+    if (digitalDepartments.length === 0 && stateId != null) {
+      redirect(canonical);
+    }
+  }
+
   if (
-    states.length > 0 &&
+    showStateFilter &&
     (selectedDepartamentoId == null ||
       effectiveDepartamentoId !== selectedDepartamentoId) &&
     effectiveDepartamentoId != null
@@ -123,8 +189,8 @@ async function SearchContent({
     redirect(canonical);
   }
 
-  const billboards =
-    effectiveDepartamentoId != null
+  const staticBillboards =
+    mode === "estatica" && effectiveDepartamentoId != null
       ? await getCachedAvailableBillboardsByState(
           effectiveDepartamentoId,
           from,
@@ -132,11 +198,25 @@ async function SearchContent({
         )
       : [];
 
+  const digitalBillboards =
+    mode === "digital"
+      ? await getCachedAvailableDigitalBillboards(
+          effectiveDepartamentoId,
+          from,
+          to,
+          digitalSpots
+        )
+      : [];
+
   return (
     <SearchSection
+      mode={mode}
       states={states}
+      showStateFilter={showStateFilter}
       selectedDepartmentId={effectiveDepartamentoId}
-      billboards={billboards}
+      staticBillboards={staticBillboards}
+      digitalBillboards={digitalBillboards}
+      digitalSpots={digitalSpots}
       from={fromStr}
       to={toStr}
     />
